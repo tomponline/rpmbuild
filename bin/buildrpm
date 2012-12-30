@@ -1,2 +1,2 @@
 #!/bin/bash
-rpmbuild -ba --clean ~/SPECS/$1
+rpmbuild -bb --clean ~/SPEC/$1
