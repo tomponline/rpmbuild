@@ -1,0 +1,2 @@
+createrepo --update ~/RPMS/
+rsync -avz --delete ~/RPMS/* yum@192.168.1.6:~/public/centos/5/
