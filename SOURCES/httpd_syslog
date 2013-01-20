@@ -1,0 +1,12 @@
+#!/usr/bin/perl
+use strict;
+use Sys::Syslog qw( :DEFAULT setlogsock );
+setlogsock('unix');
+openlog('httpd', 'cons,pid','local1');
+
+#Read from STDIN and log to syslog
+while (my $log = <STDIN>) {
+        syslog('notice', $log);
+}
+closelog();
+
