@@ -3,7 +3,7 @@
 Summary: Apache HTTP Server
 Name: httpd
 Version: 2.2.23
-Release: 1
+Release: 2
 URL: http://httpd.apache.org/
 Source0: http://www.apache.org/dist/httpd/httpd-%{version}.tar.gz
 Source1: httpd.init
@@ -52,7 +52,7 @@ mpm=$1; shift
 ./configure  \
         --enable-layout=RedHat \
 	--libdir=%{_libdir} \
-	--libexecdir=%{_libdir}/apache \
+	--libexecdir=%{_libdir}/httpd \
         --with-mpm=$mpm \
         --enable-pie \
         --enable-so \
@@ -106,7 +106,7 @@ install -m 755 -d $RPM_BUILD_ROOT/%{contentdir}/html
 #Create symlinks for /etc/httpd
 ln -s ../..%{_localstatedir}/log/httpd $RPM_BUILD_ROOT/etc/httpd/logs
 ln -s ../..%{_localstatedir}/run $RPM_BUILD_ROOT/etc/httpd/run
-ln -s ../..%{_libdir}/apache $RPM_BUILD_ROOT/etc/httpd/modules
+ln -s ../..%{_libdir}/httpd $RPM_BUILD_ROOT/etc/httpd/modules
 
 # Install SYSV init stuff
 mkdir -p $RPM_BUILD_ROOT/etc/rc.d/init.d
