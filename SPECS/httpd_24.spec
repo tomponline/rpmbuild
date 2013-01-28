@@ -5,11 +5,12 @@
 Summary: Apache HTTP Server
 Name: httpd
 Version: 2.4.3
-Release: 1
+Release: 3
 Epoch: 1
 URL: http://httpd.apache.org/
 Vendor: Apache Software Foundation
 Source0: http://www.apache.org/dist/httpd/httpd-%{version}.tar.bz2
+Source1: httpd_24.conf
 License: Apache License, Version 2.0
 Group: System Environment/Daemons
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
@@ -203,6 +204,9 @@ rm -rf $RPM_BUILD_ROOT%{_libdir}/httpd/modules/*.exp \
 
 # Make suexec a+rw so it can be stripped.  %%files lists real permissions
 chmod 755 $RPM_BUILD_ROOT%{_sbindir}/suexec
+
+# Install customised httpd.conf
+install -m 644 $RPM_SOURCE_DIR/httpd_24.conf $RPM_BUILD_ROOT/etc/httpd/conf/httpd.conf
 
 %pre
 # Add the "apache" user
