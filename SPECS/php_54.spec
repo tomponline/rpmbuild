@@ -240,8 +240,8 @@ make %{?_smp_mflags}
 export INSTALL_ROOT=$RPM_BUILD_ROOT
 
 # Install the Apache module
-install -m 755 -d $RPM_BUILD_ROOT%{_libdir}/httpd
-install -m 755 .libs/libphp5.so $RPM_BUILD_ROOT%{_libdir}/httpd/
+install -m 755 -d $RPM_BUILD_ROOT%{_libdir}/httpd/modules
+install -m 755 .libs/libphp5.so $RPM_BUILD_ROOT%{_libdir}/httpd/modules/
 
 # Apache config fragment
 install -m 755 -d $RPM_BUILD_ROOT/etc/httpd/conf.d
@@ -308,7 +308,7 @@ fi
 /usr/bin/php-config
 /usr/bin/phpize
 %dir %{_sysconfdir}/php.d
-%{_libdir}/httpd/libphp5.so
+%{_libdir}/httpd/modules/libphp5.so
 %attr(0770,root,apache) %dir %{_localstatedir}/lib/php/session
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/php.conf
 
