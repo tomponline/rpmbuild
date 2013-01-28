@@ -4,7 +4,7 @@
 Summary: The PHP HTML-embedded scripting language. (PHP: Hypertext Preprocessor)
 Name: php
 Version: 5.4.11
-Release: 2
+Release: 3
 License: The PHP License v3.01
 Group: Development/Languages
 URL: http://www.php.net/
@@ -183,6 +183,13 @@ export CFLAGS CPPFLAGS
 # Hard-code path to links to avoid unnecessary builddep
 export LYNX_PATH=/usr/bin/links
 
+APXS=%{_sbindir}/apxs
+
+if [ -f %{_bindir}/apxs ]
+  then
+	APXS=%{_bindir}/apxs
+fi
+
 #Run mod_php and cli binaries
 ./configure \
         --prefix=%{_prefix} \
@@ -198,7 +205,7 @@ export LYNX_PATH=/usr/bin/links
         --with-zlib \
         --with-libxml-dir=shared,%{_prefix} \
 	--with-xsl=shared,%{_prefix} \
-        --with-apxs2=%{_bindir}/apxs \
+        --with-apxs2=${APXS} \
         --enable-mbstring=shared \
         --with-gd=shared \
         --with-mysql=shared,mysqlnd \
