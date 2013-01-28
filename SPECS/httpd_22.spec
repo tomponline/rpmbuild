@@ -52,7 +52,7 @@ mpm=$1; shift
 ./configure  \
         --enable-layout=RedHat \
 	--libdir=%{_libdir} \
-	--libexecdir=%{_libdir}/httpd \
+	--libexecdir=%{_libdir}/httpd/modules \
         --with-mpm=$mpm \
         --enable-pie \
         --enable-so \
