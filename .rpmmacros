@@ -1,0 +1,4 @@
+%_topdir       /home/rpmbuild
+%_tmppath      %{_topdir}/tmp
+%_sourcedir    %{_topdir}/SOURCES
+
