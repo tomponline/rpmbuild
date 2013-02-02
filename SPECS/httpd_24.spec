@@ -13,7 +13,7 @@ Source0: http://www.apache.org/dist/httpd/httpd-%{version}.tar.bz2
 Source1: httpd_24.conf
 Source2: httpd.errors.conf
 Source3: httpd_syslog
-Source4: httpd.syslog.conf
+Source4: httpd.logging.conf
 Source5: httpd.timeout.conf
 Source6: httpd.mpmprefork.conf
 License: Apache License, Version 2.0
@@ -221,7 +221,7 @@ echo -n > $RPM_BUILD_ROOT/%{contentdir}/html/index.html
 
 # Install customised logging stuff
 install -m 755 $RPM_SOURCE_DIR/httpd_syslog $RPM_BUILD_ROOT%{_bindir}/httpd_syslog
-install -m 644 $RPM_SOURCE_DIR/httpd.syslog.conf $RPM_BUILD_ROOT/etc/httpd/conf.d/syslog.conf
+install -m 644 $RPM_SOURCE_DIR/httpd.logging.conf $RPM_BUILD_ROOT/etc/httpd/conf.d/logging.conf
 
 # Install customised timeout.conf
 install -m 644 $RPM_SOURCE_DIR/httpd.timeout.conf $RPM_BUILD_ROOT/etc/httpd/conf.d/timeout.conf
@@ -293,7 +293,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_sysconfdir}/httpd/conf
 %dir %{_sysconfdir}/httpd/conf.d
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/errors.conf
-%config(noreplace) %{_sysconfdir}/httpd/conf.d/syslog.conf
+%config(noreplace) %{_sysconfdir}/httpd/conf.d/logging.conf
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/timeout.conf
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/mpmprefork.conf
 %config(noreplace) %{_sysconfdir}/httpd/conf/httpd.conf

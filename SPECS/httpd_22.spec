@@ -11,7 +11,7 @@ Source2: httpd.logrotate
 Source3: httpd.sysconf
 Source4: httpd.conf
 Source5: httpd_syslog
-Source6: httpd.syslog.conf
+Source6: httpd.logging.conf
 Source8: httpd.ssl.conf
 Source14: httpd.errors.conf
 Source16: httpd.mpmprefork.conf
@@ -122,7 +122,7 @@ install -m 644 $RPM_SOURCE_DIR/httpd.mpmprefork.conf $RPM_BUILD_ROOT/etc/httpd/c
 install -m 755 -d $RPM_BUILD_ROOT%{_sysconfdir}/logrotate.d
 install -m 644 $RPM_SOURCE_DIR/httpd.logrotate $RPM_BUILD_ROOT%{_sysconfdir}/logrotate.d/httpd
 install -m 755 $RPM_SOURCE_DIR/httpd_syslog $RPM_BUILD_ROOT/usr/bin/httpd_syslog
-install -m 644 $RPM_SOURCE_DIR/httpd.syslog.conf $RPM_BUILD_ROOT/etc/httpd/conf.d/syslog.conf
+install -m 644 $RPM_SOURCE_DIR/httpd.loggin.conf $RPM_BUILD_ROOT/etc/httpd/conf.d/logging.conf
 
 #Install SSL config 
 install -m 644 $RPM_SOURCE_DIR/httpd.ssl.conf $RPM_BUILD_ROOT/etc/httpd/conf.d/ssl.conf
@@ -208,7 +208,7 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %{contentdir}/html/index.html
 %dir /etc/httpd/conf
 %dir /etc/httpd/conf.d
-%config(noreplace) %{_sysconfdir}/httpd/conf.d/syslog.conf
+%config(noreplace) %{_sysconfdir}/httpd/conf.d/logging.conf
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/modules.conf
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/proxy.conf
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/ssl.conf
