@@ -3,7 +3,7 @@
 Summary: Apache HTTP Server
 Name: httpd
 Version: 2.2.23
-Release: 3
+Release: 4
 URL: http://httpd.apache.org/
 Source0: http://www.apache.org/dist/httpd/httpd-%{version}.tar.gz
 Source1: httpd.init
