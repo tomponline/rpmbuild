@@ -5,12 +5,15 @@
 Summary: Apache HTTP Server
 Name: httpd
 Version: 2.4.3
-Release: 3
+Release: 4
 Epoch: 1
 URL: http://httpd.apache.org/
 Vendor: Apache Software Foundation
 Source0: http://www.apache.org/dist/httpd/httpd-%{version}.tar.bz2
 Source1: httpd_24.conf
+Source2: httpd.errors.conf
+Source3: httpd_syslog
+Source4: httpd.syslog.conf
 License: Apache License, Version 2.0
 Group: System Environment/Daemons
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
@@ -208,6 +211,16 @@ chmod 755 $RPM_BUILD_ROOT%{_sbindir}/suexec
 # Install customised httpd.conf
 install -m 644 $RPM_SOURCE_DIR/httpd_24.conf $RPM_BUILD_ROOT/etc/httpd/conf/httpd.conf
 
+# Install customised errors.conf
+install -m 644 $RPM_SOURCE_DIR/httpd.errors.conf $RPM_BUILD_ROOT/etc/httpd/conf.d/errors.conf
+
+# Install customised empty index.html
+echo -n > $RPM_BUILD_ROOT/%{contentdir}/html/index.html
+
+# Install customised logging stuff
+install -m 755 $RPM_SOURCE_DIR/httpd_syslog $RPM_BUILD_ROOT%{_bindir}/httpd_syslog
+install -m 644 $RPM_SOURCE_DIR/httpd.syslog.conf $RPM_BUILD_ROOT/etc/httpd/conf.d/syslog.conf
+
 %pre
 # Add the "apache" user
 /usr/sbin/useradd -c "Apache" -u 48 \
@@ -271,6 +284,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/httpd/run
 %dir %{_sysconfdir}/httpd/conf
 %dir %{_sysconfdir}/httpd/conf.d
+%config(noreplace) %{_sysconfdir}/httpd/conf.d/errors.conf
+%config(noreplace) %{_sysconfdir}/httpd/conf.d/syslog.conf
 %config(noreplace) %{_sysconfdir}/httpd/conf/httpd.conf
 %config(noreplace) %{_sysconfdir}/httpd/conf/magic
 %config(noreplace) %{_sysconfdir}/httpd/conf/mime.types
@@ -306,6 +321,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_sbindir}/htcacheclean
 %{_sbindir}/httpd
 %{_sbindir}/apachectl
+%{_bindir}/httpd_syslog
 %attr(4510,root,%{suexec_caller}) %{_sbindir}/suexec
 
 %dir %{_libdir}/httpd
