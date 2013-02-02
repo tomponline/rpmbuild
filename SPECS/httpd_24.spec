@@ -5,7 +5,7 @@
 Summary: Apache HTTP Server
 Name: httpd
 Version: 2.4.3
-Release: 5
+Release: 6
 Epoch: 1
 URL: http://httpd.apache.org/
 Vendor: Apache Software Foundation
