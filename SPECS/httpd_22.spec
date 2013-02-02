@@ -122,7 +122,7 @@ install -m 644 $RPM_SOURCE_DIR/httpd.mpmprefork.conf $RPM_BUILD_ROOT/etc/httpd/c
 install -m 755 -d $RPM_BUILD_ROOT%{_sysconfdir}/logrotate.d
 install -m 644 $RPM_SOURCE_DIR/httpd.logrotate $RPM_BUILD_ROOT%{_sysconfdir}/logrotate.d/httpd
 install -m 755 $RPM_SOURCE_DIR/httpd_syslog $RPM_BUILD_ROOT/usr/bin/httpd_syslog
-install -m 644 $RPM_SOURCE_DIR/httpd.loggin.conf $RPM_BUILD_ROOT/etc/httpd/conf.d/logging.conf
+install -m 644 $RPM_SOURCE_DIR/httpd.logging.conf $RPM_BUILD_ROOT/etc/httpd/conf.d/logging.conf
 
 #Install SSL config 
 install -m 644 $RPM_SOURCE_DIR/httpd.ssl.conf $RPM_BUILD_ROOT/etc/httpd/conf.d/ssl.conf
