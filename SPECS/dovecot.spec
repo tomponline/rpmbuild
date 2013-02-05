@@ -2,11 +2,12 @@ Summary: Dovecot Secure imap server
 Name: dovecot
 Version: 2.1.14
 Release: 1
+Epoch: 1
 License: LGPL
 Group: System Environment/Daemons
 
 Source: %{name}-%{version}.tar.gz
-Source1: dovecot.init
+Source1: %{name}.init
 URL: http://www.dovecot.org/
 Buildroot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: openssl-devel
@@ -61,6 +62,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root)
-/etc/dovecot
-/etc/rc.d/init.d/dovecot
+/etc/%{name}
+/etc/rc.d/init.d/%{name}
 /usr
