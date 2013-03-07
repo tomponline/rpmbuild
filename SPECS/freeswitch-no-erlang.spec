@@ -41,7 +41,7 @@
 %{?with_timerfd:%define build_timerfd 1 }
 %{?with_mod_esl:%define build_mod_esl 1 }
 
-%define version 1.2.5.3
+%define version 1.2.7
 %define release 1
 
 ######################################################################################################################
@@ -1227,7 +1227,7 @@ Basic vanilla config set for the FreeSWITCH Open Source telephone platform.
 ######################################################################################################################
 
 %prep
-%setup -b0 -q -n %{name}
+%setup -b0 -q
 cp %{SOURCE1} libs/
 cp %{SOURCE2} libs/
 cp %{SOURCE3} libs/
