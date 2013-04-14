@@ -1,0 +1,77 @@
+#! /bin/sh
+#
+# chkconfig: - 55 45
+# description:  The beanstalkd daemon is a network memory queue service.
+# processname: beanstalkd
+# config: /etc/sysconfig/beanstalkd
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+DIR="/var/lib/beanstalkd"
+USER="nobody"
+OPTIONS="-l 0.0.0.0"
+
+if [ -f /etc/sysconfig/beanstalkd ];then
+       	. /etc/sysconfig/beanstalkd
+fi
+
+# Check that networking is up.
+if [ "$NETWORKING" = "no" ]
+then
+       	exit 0
+fi
+
+RETVAL=0
+prog="beanstalkd"
+
+start () {
+	echo -n $"Starting $prog: "
+        mkdir -p $DIR
+        chown $USER $DIR
+        chmod 700 $DIR
+        daemon beanstalkd -u $USER -b $DIR $OPTIONS &
+        RETVAL=$?
+        echo
+	[ $RETVAL -eq 0 ] && touch /var/lock/subsys/beanstalkd
+}
+stop () {
+	echo -n $"Stopping $prog: "
+        killproc beanstalkd
+        RETVAL=$?
+        echo
+	if [ $RETVAL -eq 0 ] ; then
+            rm -f /var/lock/subsys/beanstalkd
+        fi
+}
+
+restart () {
+	stop
+	start
+}
+
+
+# See how we were called.
+case "$1" in
+  start)
+        start
+	;;
+  stop)
+        stop
+        ;;
+  status)
+        status beanstalkd
+        ;;
+  restart|reload)
+       	restart
+        ;;
+  condrestart)
+        [ -f /var/lock/subsys/beanstalkd ] && restart || :
+        ;;
+  *)
+	echo $"Usage: $0 {start|stop|status|restart|reload|condrestart}"
+        exit 1
+esac
+
+exit $?
+
