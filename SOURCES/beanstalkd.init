@@ -30,7 +30,7 @@ start () {
         mkdir -p $DIR
         chown $USER $DIR
         chmod 700 $DIR
-        daemon beanstalkd -u $USER -b $DIR $OPTIONS &
+        daemon "beanstalkd -u $USER -b $DIR $OPTIONS &"
         RETVAL=$?
         echo
 	[ $RETVAL -eq 0 ] && touch /var/lock/subsys/beanstalkd
