@@ -4,7 +4,7 @@
 Summary: The PHP HTML-embedded scripting language. (PHP: Hypertext Preprocessor)
 Name: php
 Version: 5.5.0
-Release: 1
+Release: 2
 License: The PHP License v3.01
 Group: Development/Languages
 URL: http://www.php.net/
@@ -219,7 +219,7 @@ fi
 	--enable-xmlreader=shared \
 	--enable-xmlwriter=shared \
 	--without-pear \
-	--disable-ipv6 \
+	--enable-ipv6 \
 	--with-pic \
 	--enable-inline-optimization \
 	--disable-debug \
