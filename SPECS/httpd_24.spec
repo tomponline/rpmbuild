@@ -4,7 +4,7 @@
 
 Summary: Apache HTTP Server
 Name: httpd
-Version: 2.4.4
+Version: 2.4.6
 Release: 1
 Epoch: 1
 URL: http://httpd.apache.org/
@@ -438,6 +438,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/httpd/modules/mod_version.so
 %{_libdir}/httpd/modules/mod_vhost_alias.so
 %{_libdir}/httpd/modules/mod_watchdog.so
+%{_libdir}/httpd/modules/mod_cache_socache.so
+%{_libdir}/httpd/modules/mod_macro.so
+%{_libdir}/httpd/modules/mod_proxy_wstunnel.so
 
 %dir %{contentdir}
 %dir %{contentdir}/cgi-bin
