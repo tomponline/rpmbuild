@@ -219,7 +219,7 @@ fi
 	--enable-xmlreader=shared \
 	--enable-xmlwriter=shared \
 	--without-pear \
-	--disable-ipv6 \
+	--enable-ipv6 \
 	--with-pic \
 	--enable-inline-optimization \
 	--disable-debug \
