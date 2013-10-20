@@ -2,10 +2,10 @@
 
 Summary: Apache HTTP Server
 Name: httpd
-Version: 2.2.24
+Version: 2.2.25
 Release: 1
 URL: http://httpd.apache.org/
-Source0: http://www.apache.org/dist/httpd/httpd-%{version}.tar.gz
+Source0: http://www.apache.org/dist/httpd/httpd-%{version}.tar.bz2
 Source1: httpd.init
 Source2: httpd.logrotate
 Source3: httpd.sysconf
