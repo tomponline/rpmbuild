@@ -20,7 +20,8 @@ TINC VPN
 
 ./configure \
         --prefix=%{_prefix} \
-	--sysconfdir=%{_sysconfdir}
+	--sysconfdir=%{_sysconfdir} \
+	--localstatedir=%{_localstatedir}
 
 make
 

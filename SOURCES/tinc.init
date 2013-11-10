@@ -38,7 +38,7 @@ case "$1" in
     echo -n "Starting $DESC:"
     for n in $NETS ; do
       echo -n " $n "
-      $DAEMON -n $n $EXTRA
+      $DAEMON -d1 -n $n $EXTRA
     done
     echo "."
   ;;
