@@ -7,7 +7,7 @@ Source0: zmq-%{version}.tgz
 License: Apache License
 Group: System Environment/Daemons
 BuildRoot: %{_tmppath}/%{name}-root
-BuildRequires: php >= 5.4, autoconf
+BuildRequires: php >= 5.4, autoconf, zeromq
 Requires: php >= 5.4
 
 %description
