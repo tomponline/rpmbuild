@@ -3,7 +3,7 @@
 
 Summary: The PHP HTML-embedded scripting language. (PHP: Hypertext Preprocessor)
 Name: php
-Version: 5.5.5
+Version: 5.5.7
 Release: 1
 License: The PHP License v3.01
 Group: Development/Languages
@@ -74,6 +74,14 @@ Requires: php = %{version}-%{release}
 
 %description mbstring
 Provides PHP Mbstring module
+
+%package bcmath
+Group: Development/Languages
+Summary: Bcmath module of PHP
+Requires: php = %{version}-%{release}
+
+%description bcmath
+Provides PHP Bcmath module
 
 %package soap
 Group: Development/Languages
@@ -207,6 +215,7 @@ fi
 	--with-xsl=shared,%{_prefix} \
         --with-apxs2=${APXS} \
         --enable-mbstring=shared \
+	--enable-bcmath=shared \
         --with-gd=shared \
         --with-mysql=shared,mysqlnd \
         --with-mysqli=shared,mysqlnd \
@@ -277,6 +286,7 @@ echo "extension=xmlreader.so" >  $RPM_BUILD_ROOT%{_sysconfdir}/php.d/xmlreader.i
 echo "extension=xmlwriter.so" >  $RPM_BUILD_ROOT%{_sysconfdir}/php.d/xmlwriter.ini
 echo "extension=dom.so" >  $RPM_BUILD_ROOT%{_sysconfdir}/php.d/dom.ini
 echo "extension=mbstring.so" >  $RPM_BUILD_ROOT%{_sysconfdir}/php.d/mbstring.ini
+echo "extension=bcmath.so" >  $RPM_BUILD_ROOT%{_sysconfdir}/php.d/bcmath.ini
 echo "extension=zip.so" >  $RPM_BUILD_ROOT%{_sysconfdir}/php.d/zip.ini
 echo "extension=sockets.so" >  $RPM_BUILD_ROOT%{_sysconfdir}/php.d/sockets.ini
 echo "extension=pcntl.so" >  $RPM_BUILD_ROOT%{_sysconfdir}/php.d/pcntl.ini
@@ -338,6 +348,11 @@ fi
 %defattr(-,root,root)
 %config(noreplace) /etc/php.d/mbstring.ini
 %{_libdir}/php/extensions/%{apiver}/mbstring.so
+
+%files bcmath
+%defattr(-,root,root)
+%config(noreplace) /etc/php.d/bcmath.ini
+%{_libdir}/php/extensions/%{apiver}/bcmath.so
 
 %files soap
 %defattr(-,root,root)
