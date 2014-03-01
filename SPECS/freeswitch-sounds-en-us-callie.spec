@@ -1,5 +1,5 @@
-%define version 1.0.18
-%define release 3
+%define version 1.0.25
+%define release 1
 
 %define fsname  freeswitch
 %define prefix  /usr
@@ -16,7 +16,6 @@ Version: %{version}
 Release: %{release}
 License: Commercial
 Group: Applications/Communications
-Packager: TomP <tomp@tomp.co.uk>
 URL: http://www.freeswitch.org
 Source0: %{name}-8000-%{version}.tar.gz
 Source1: %{name}-16000-%{version}.tar.gz

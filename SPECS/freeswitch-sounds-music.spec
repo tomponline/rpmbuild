@@ -16,7 +16,6 @@ Version: %{version}
 Release: %{release}
 License: Commercial
 Group: Applications/Communications
-Packager: TomP <tomp@tomp.co.uk>
 URL: http://www.freeswitch.org
 Source0: %{name}-8000-%{version}.tar.gz
 Source1: %{name}-16000-%{version}.tar.gz

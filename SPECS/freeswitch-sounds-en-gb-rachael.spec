@@ -16,7 +16,6 @@ Version: %{version}
 Release: %{release}
 License: Commercial
 Group: Applications/Communications
-Packager: TomP <tomp@tomp.co.uk>
 URL: http://www.freeswitch.org
 Source0: british-english-rachael-en-gb-3.6.0-8k.tar.gz
 BuildArch: noarch
