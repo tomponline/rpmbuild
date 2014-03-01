@@ -44,8 +44,8 @@
 %{?with_timerfd:%define build_timerfd 1 }
 %{?with_mod_esl:%define build_mod_esl 1 }
 
-%define version 1.2.22
-%define release 1
+%define version 1.2.22.1
+%define release 2
 
 ######################################################################################################################
 #
@@ -1669,7 +1669,7 @@ fi
 %config(noreplace) %attr(0640, freeswitch, daemon) %{HTDOCSDIR}/*
 %ifos linux
 /etc/rc.d/init.d/freeswitch
-/etc/sysconfig/freeswitch
+%config(noreplace) /etc/sysconfig/freeswitch
 %if 0%{?suse_version} > 100
 /usr/sbin/rcfreeswitch
 %endif
