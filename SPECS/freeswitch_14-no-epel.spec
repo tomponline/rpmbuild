@@ -347,16 +347,6 @@ Requires:       %{name} = %{version}-%{release}
 Provides FreeSWITCH mod_easyroute, a simple, easy to use DB Backed DID routing 
 Engine. Uses ODBC to connect to the DB of your choice.
 
-%package application-enum
-Summary:	FreeSWITCH mod_enum
-Group:          System/Libraries
-Requires:       %{name} = %{version}-%{release}
-BuildRequires: 	ldns-devel
-
-%description application-enum
-Provides FreeSWITCH mod_enum, a ENUM dialplan, with API and Dialplan extensions 
-supporting ENUM lookups.
-
 %package application-esf
 Summary:	FreeSWITCH mod_esf
 Group:          System/Libraries
@@ -1238,7 +1228,6 @@ Requires:	freeswitch-application-db
 Requires:	freeswitch-application-directory
 Requires:	freeswitch-application-distributor
 Requires:	freeswitch-application-easyroute
-Requires:	freeswitch-application-enum
 Requires:	freeswitch-application-esf
 Requires:	freeswitch-application-expr
 Requires:	freeswitch-application-fifo
@@ -1328,7 +1317,7 @@ APPLICATION_MODULES_AC="applications/mod_abstraction applications/mod_avmd appli
 			applications/mod_callcenter  applications/mod_cidlookup \
 			applications/mod_commands applications/mod_conference applications/mod_curl"
 APPLICATION_MODULES_DE="applications/mod_db applications/mod_directory applications/mod_distributor \
-			applications/mod_dptools applications/mod_easyroute applications/mod_enum applications/mod_esf \
+			applications/mod_dptools applications/mod_easyroute applications/mod_esf \
 			applications/mod_expr "
 
 %if %{build_mod_esl}
@@ -1889,9 +1878,6 @@ fi
 
 %files application-easyroute
 %{MODINSTDIR}/mod_easyroute.so*
-
-%files application-enum
-%{MODINSTDIR}/mod_enum.so*
 
 %files application-esf
 %{MODINSTDIR}/mod_esf.so*
