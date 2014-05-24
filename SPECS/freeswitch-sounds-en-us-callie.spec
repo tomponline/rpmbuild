@@ -10,7 +10,7 @@
 # General
 ##############################################################################
 
-Summary: FreeSWITCH en-gb-rachael  prompts
+Summary: FreeSWITCH en-us-callie  prompts
 Name: freeswitch-sounds-en-us-callie
 Version: %{version}
 Release: %{release}
