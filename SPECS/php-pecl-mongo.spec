@@ -1,6 +1,6 @@
 Summary: MongoDB database driver
 Name: php-pecl-mongo
-Version: 1.4.4
+Version: 1.5.4
 Release: 1
 URL: http://pecl.php.net/package/mongo
 Source0: mongo-%{version}.tgz

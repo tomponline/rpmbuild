@@ -1,3 +1,3 @@
 CENTOSVER=`rpm -q --qf "%{VERSION}" centos-release`
 createrepo --update ~/RPMS/
-rsync -avz --delete ~/RPMS/* yum@192.168.1.6:~/public/centos/${CENTOSVER}/
+rsync -avz --delete ~/RPMS/* yum@rh-el6dev01.netvps.co.uk:~/public/centos/${CENTOSVER}/
