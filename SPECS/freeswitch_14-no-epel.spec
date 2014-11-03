@@ -3,7 +3,7 @@
 # spec file for package freeswitch
 #
 # includes module(s): freeswitch-devel freeswitch-codec-passthru-amr freeswitch-codec-passthru-amrwb freeswitch-codec-passthru-g729 
-#                     freeswitch-codec-passthru-g7231 freeswitch-lua freeswitch-perl freeswitch-python freeswitch-spidermonkey freeswitch-v8
+#                     freeswitch-codec-passthru-g7231 freeswitch-lua freeswitch-perl freeswitch-python freeswitch-v8
 #                     freeswitch-lan-de freeswitch-lang-en freeswitch-lang-fr freeswitch-lang-hu freeswitch-lang-ru freeswitch-freetdm
 #		      and others
 #
@@ -45,7 +45,7 @@
 %{?with_timerfd:%define build_timerfd 1 }
 %{?with_mod_esl:%define build_mod_esl 1 }
 
-%define version 1.4.6
+%define version 1.4.12
 %define release 1
 
 ######################################################################################################################
@@ -121,14 +121,14 @@ Source3:	http://files.freeswitch.org/downloads/libs/lame-3.98.4.tar.gz
 Source4:	http://files.freeswitch.org/downloads/libs/libshout-2.2.2.tar.gz
 Source5:	http://files.freeswitch.org/downloads/libs/mpg123-1.13.2.tar.gz
 #Source6:	http://files.freeswitch.org/downloads/libs/openldap-2.4.11.tar.gz
-Source6:	http://files.freeswitch.org/downloads/libs/pocketsphinx-0.7.tar.gz
+Source6:	http://files.freeswitch.org/downloads/libs/pocketsphinx-0.8.tar.gz
 Source7:	http://files.freeswitch.org/downloads/libs/soundtouch-1.7.1.tar.gz
-Source8:	http://files.freeswitch.org/downloads/libs/sphinxbase-0.7.tar.gz
+Source8:	http://files.freeswitch.org/downloads/libs/sphinxbase-0.8.tar.gz
 Source9:	http://files.freeswitch.org/downloads/libs/communicator_semi_6000_20080321.tar.gz
 Source10:	http://files.freeswitch.org/downloads/libs/libmemcached-0.32.tar.gz
 Source11:       http://files.freeswitch.org/downloads/libs/json-c-0.9.tar.gz
-Source12:       http://files.freeswitch.org/downloads/libs/opus-1.1.tar.gz
-Source13:       http://files.freeswitch.org/downloads/libs/v8-3.24.14.tar.bz2
+Source12:       http://files.freeswitch.org/downloads/libs/opus-1.1-p2.tar.gz
+#Source13:       http://files.freeswitch.org/downloads/libs/v8-3.24.14.tar.bz2
 Prefix:        	%{prefix}
 
 
@@ -146,14 +146,20 @@ BuildRequires: lzo-devel
 %endif
 BuildRequires: autoconf
 BuildRequires: automake
+BuildRequires: bzip2
 BuildRequires: curl-devel
 BuildRequires: gcc-c++
 BuildRequires: gnutls-devel
 BuildRequires: libtool >= 1.5.17
 BuildRequires: ncurses-devel
-BuildRequires: openssl-devel
+BuildRequires: openssl-devel >= 1.0.1e
+BuildRequires: pcre-devel 
+BuildRequires: speex-devel 
+BuildRequires: sqlite-devel
+#BuildRequires: ldns-devel
+BuildRequires: libedit-devel
 BuildRequires: perl
-%if 0%{?fedora_version} >= 8 || 0%{?rhel} >= 6
+%if 0%{?fedora} >= 8 || 0%{?rhel} >= 6
 BuildRequires: perl-ExtUtils-Embed
 %endif
 BuildRequires: pkgconfig
@@ -162,7 +168,11 @@ BuildRequires: termcap
 %endif
 BuildRequires: unixODBC-devel
 BuildRequires: gdbm-devel
+%if 0%{?suse_version} > 100
+BuildRequires: db-devel
+%else
 BuildRequires: db4-devel
+%endif
 BuildRequires: python-devel
 BuildRequires: libogg-devel
 BuildRequires: libvorbis-devel
@@ -175,6 +185,8 @@ BuildRequires: e2fsprogs-devel
 BuildRequires: libtheora-devel
 BuildRequires: libxml2-devel
 BuildRequires: bison
+BuildRequires: net-snmp-devel
+BuildRequires: libmemcached-devel
 %if %{build_py26_esl}
 BuildRequires: python26-devel
 Requires: python26
@@ -184,7 +196,11 @@ Requires: libogg
 Requires: libvorbis
 Requires: curl
 Requires: ncurses
-Requires: openssl
+Requires: pcre
+Requires: speex
+Requires: sqlite
+Requires: libedit
+Requires: openssl >= 1.0.1e
 Requires: unixODBC
 Requires: libjpeg
 #Requires: openldap
@@ -347,6 +363,15 @@ Requires:       %{name} = %{version}-%{release}
 Provides FreeSWITCH mod_easyroute, a simple, easy to use DB Backed DID routing 
 Engine. Uses ODBC to connect to the DB of your choice.
 
+#%package application-enum
+#Summary:	FreeSWITCH mod_enum
+#Group:          System/Libraries
+#Requires:       %{name} = %{version}-%{release}
+
+#%description application-enum
+#Provides FreeSWITCH mod_enum, a ENUM dialplan, with API and Dialplan extensions 
+#supporting ENUM lookups.
+
 %package application-esf
 Summary:	FreeSWITCH mod_esf
 Group:          System/Libraries
@@ -449,7 +474,6 @@ Provides FreeSWITCH mod_limit, provide application to limit both concurrent and 
 Summary:	FreeSWITCH mod_memcache
 Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
-BuildRequires:	libmemcached-devel
 
 %description application-memcache
 Provides FreeSWITCH mod_memcache, implements an API interface to memcached which
@@ -814,15 +838,15 @@ to be used as a client for GoogleTalk or other XMPP Servers.
 #%description endpoint-khomp
 #Khomp hardware endpoint support for FreeSWITCH open source telephony platform.
 
-%package endpoint-portaudio
-Summary:        PortAudio endpoint support for FreeSWITCH open source telephony platform
-Group:          System/Libraries
-Requires:       %{name} = %{version}-%{release}
-Requires:	alsa-lib
-BuildRequires:	alsa-lib-devel
+#%package endpoint-portaudio
+#Summary:        PortAudio endpoint support for FreeSWITCH open source telephony platform
+#Group:          System/Libraries
+#Requires:       %{name} = %{version}-%{release}
+#Requires:	alsa-lib
+#BuildRequires:	alsa-lib-devel
 
-%description endpoint-portaudio
-PortAudio endpoint support for FreeSWITCH open source telephony platform.
+#%description endpoint-portaudio
+#PortAudio endpoint support for FreeSWITCH open source telephony platform.
 
 %package endpoint-rtmp
 Summary:        RTPM Endpoint support for FreeSWITCH open source telephony platform
@@ -841,6 +865,22 @@ Requires:       %{name} = %{version}-%{release}
 
 %description endpoint-skinny
 SCCP/Skinny support for FreeSWITCH open source telephony platform.
+
+%package endpoint-verto
+Summary:        Verto endpoint support for FreeSWITCH open source telephony platform
+Group:          System/Libraries
+Requires:       %{name} = %{version}-%{release}
+
+%description endpoint-verto
+Verto protocol support for FreeSWITCH open source telephony platform.
+
+%package endpoint-rtc
+Summary:        Verto endpoint support for FreeSWITCH open source telephony platform
+Group:          System/Libraries
+Requires:       %{name} = %{version}-%{release}
+
+%description endpoint-rtc
+Verto protocol support for FreeSWITCH open source telephony platform.
 
 %package freetdm
 Summary:	Provides a unified interface to hardware TDM cards and ss7 stacks for FreeSWITCH
@@ -932,6 +972,16 @@ Requires:	 %{name} = %{version}-%{release}
 %description event-cdr-sqlite
 SQLite CDR Logger for FreeSWITCH.
 
+#%package event-erlang-event
+#Summary:	Erlang Event Module for the FreeSWITCH open source telephony platform
+#Group:		System/Libraries
+#Requires:	 %{name} = %{version}-%{release}
+#Requires:	erlang
+#BuildRequires:	erlang
+
+#%description event-erlang-event
+#Erlang Event Module for FreeSWITCH.
+
 %package event-multicast
 Summary:	Multicast Event System for the FreeSWITCH open source telephony platform
 Group:		System/Libraries
@@ -1003,13 +1053,13 @@ transcoding is necessary. The default FreeSWITCH sound files are in wav format.
 Generally, these require transcoding when being played to callers. However, if
 a native format sound file is available then FreeSWITCH can use it. 
 
-%package format-portaudio-stream
-Summary:	PortAudio Media Steam support for the FreeSWITCH open source telephony platform
-Group:		System/Libraries
-Requires:	%{name} = %{version}-%{release}
+#%package format-portaudio-stream
+#Summary:	PortAudio Media Steam support for the FreeSWITCH open source telephony platform
+#Group:		System/Libraries
+#Requires:	%{name} = %{version}-%{release}
 
-%description format-portaudio-stream
-Portaudio Streaming interface Audio for FreeSWITCH
+#%description format-portaudio-stream
+#Portaudio Streaming interface Audio for FreeSWITCH
 
 %package format-shell-stream
 Summary:	Implements Media Steaming from arbitrary shell commands for the FreeSWITCH open source telephony platform
@@ -1074,13 +1124,6 @@ Requires:       %{name} = %{version}-%{release}
 Requires:	python
 
 %description    python
-
-%package spidermonkey
-Summary:	JavaScript support for the FreeSWITCH open source telephony platform
-Group:		System/Libraries
-Requires:	%{name} = %{version}-%{release}
-
-%description spidermonkey
 
 %package v8
 Summary:	JavaScript support for the FreeSWITCH open source telephony platform, using Google V8 JavaScript engine
@@ -1228,6 +1271,7 @@ Requires:	freeswitch-application-db
 Requires:	freeswitch-application-directory
 Requires:	freeswitch-application-distributor
 Requires:	freeswitch-application-easyroute
+#Requires:	freeswitch-application-enum
 Requires:	freeswitch-application-esf
 Requires:	freeswitch-application-expr
 Requires:	freeswitch-application-fifo
@@ -1260,7 +1304,7 @@ Requires:	freeswitch-codec-ilbc
 Requires:	freeswitch-codec-siren
 Requires:	freeswitch-format-local-stream
 Requires:	freeswitch-format-native-file
-Requires:	freeswitch-format-portaudio-stream
+#Requires:	freeswitch-format-portaudio-stream
 Requires:	freeswitch-format-tone-stream
 Requires:	freeswitch-lang-en
 
@@ -1375,8 +1419,8 @@ DIRECTORIES_MODULES=""
 #
 ######################################################################################################################
 ENDPOINTS_MODULES="endpoints/mod_dingaling ../../libs/freetdm/mod_freetdm \
-			endpoints/mod_loopback endpoints/mod_portaudio endpoints/mod_rtmp \
-			endpoints/mod_skinny endpoints/mod_skypopen endpoints/mod_sofia"
+			endpoints/mod_loopback endpoints/mod_rtmp \
+			endpoints/mod_skinny endpoints/mod_verto endpoints/mod_rtc endpoints/mod_skypopen endpoints/mod_sofia"
 
 ## DISABLED MODULES DUE TO BUILD ISSUES endpoints/mod_gsmopen endpoints/mod_h323 endpoints/mod_khomp 
  
@@ -1385,7 +1429,7 @@ ENDPOINTS_MODULES="endpoints/mod_dingaling ../../libs/freetdm/mod_freetdm \
 #						Event Handlers
 #
 ######################################################################################################################
-EVENT_HANDLERS_MODULES="event_handlers/mod_cdr_csv event_handlers/mod_cdr_pg_csv event_handlers/mod_cdr_sqlite \
+EVENT_HANDLERS_MODULES="event_handlers/mod_cdr_csv event_handlers/mod_cdr_sqlite \
 			event_handlers/mod_cdr_mongodb event_handlers/mod_event_multicast \
 			event_handlers/mod_event_socket event_handlers/mod_json_cdr \
 			event_handlers/mod_snmp"
@@ -1393,13 +1437,13 @@ EVENT_HANDLERS_MODULES="event_handlers/mod_cdr_csv event_handlers/mod_cdr_pg_csv
 EVENT_HANDLERS_MODULES+=" event_handlers/mod_rayo"
 %endif
 
-#### BUILD ISSUES NET RESOLVED FOR RELEASE event_handlers/mod_event_zmq 
+#### BUILD ISSUES NET RESOLVED FOR RELEASE event_handlers/mod_event_zmq event_handlers/mod_cdr_pg_csv
 ######################################################################################################################
 #
 #					File and Audio Format Handlers
 #
 ######################################################################################################################
-FORMATS_MODULES="formats/mod_local_stream formats/mod_native_file formats/mod_portaudio_stream \
+FORMATS_MODULES="formats/mod_local_stream formats/mod_native_file \
                  formats/mod_shell_stream formats/mod_shout formats/mod_sndfile formats/mod_tone_stream"
 %if %{build_mod_ssml}
 FORMATS_MODULES+=" formats/mod_ssml"
@@ -1410,7 +1454,7 @@ FORMATS_MODULES+=" formats/mod_ssml"
 #						Embedded Languages
 #
 ######################################################################################################################
-LANGUAGES_MODULES="languages/mod_lua languages/mod_perl languages/mod_python languages/mod_spidermonkey "
+LANGUAGES_MODULES="languages/mod_lua languages/mod_perl languages/mod_python "
 #LANGUAGES_MODULES+="languages/mod_v8"
 
 ######################################################################################################################
@@ -1498,6 +1542,7 @@ fi
 --with-dbdir=%{DBDIR} \
 --with-htdocsdir=%{HTDOCSDIR} \
 --with-soundsdir=%{SOUNDSDIR} \
+--enable-core-pgsql-support \
 --enable-core-odbc-support \
 --enable-core-libedit-support \
 --with-grammardir=%{GRAMMARDIR} \
@@ -1658,7 +1703,7 @@ fi
 %dir %attr(0750, freeswitch, daemon) %{sysconfdir}/mrcp_profiles
 %dir %attr(0750, freeswitch, daemon) %{sysconfdir}/sip_profiles
 %dir %attr(0750, freeswitch, daemon) %{sysconfdir}/sip_profiles/external
-%dir %attr(0750, freeswitch, daemon) %{sysconfdir}/sip_profiles/internal
+%dir %attr(0750, freeswitch, daemon) %{sysconfdir}/sip_profiles/external-ipv6
 %dir %attr(0750, freeswitch, daemon) %{sysconfdir}/skinny_profiles
 #
 #################################### Grammar Directory Structure #####################################################
@@ -1794,6 +1839,7 @@ fi
 %config(noreplace) %attr(0640, freeswitch, daemon) %{sysconfdir}/autoload_configs/tts_commandline.conf.xml
 %config(noreplace) %attr(0640, freeswitch, daemon) %{sysconfdir}/autoload_configs/unicall.conf.xml
 %config(noreplace) %attr(0640, freeswitch, daemon) %{sysconfdir}/autoload_configs/unimrcp.conf.xml
+%config(noreplace) %attr(0640, freeswitch, daemon) %{sysconfdir}/autoload_configs/verto.conf.xml
 %config(noreplace) %attr(0640, freeswitch, daemon) %{sysconfdir}/autoload_configs/voicemail.conf.xml
 %config(noreplace) %attr(0640, freeswitch, daemon) %{sysconfdir}/autoload_configs/voicemail_ivr.conf.xml
 %config(noreplace) %attr(0640, freeswitch, daemon) %{sysconfdir}/autoload_configs/xml_cdr.conf.xml
@@ -1825,8 +1871,8 @@ fi
 #							Sip Profiles
 ######################################################################################################################
 %config(noreplace) %attr(0640, freeswitch, daemon) %{sysconfdir}/sip_profiles/*.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{sysconfdir}/sip_profiles/internal/*.xml
 %config(noreplace) %attr(0640, freeswitch, daemon) %{sysconfdir}/sip_profiles/external/*.xml
+%config(noreplace) %attr(0640, freeswitch, daemon) %{sysconfdir}/sip_profiles/external-ipv6/*.xml
 ######################################################################################################################
 #				Other Protocol Profiles (skinny, jingle, mrcp)
 ######################################################################################################################
@@ -1878,6 +1924,9 @@ fi
 
 %files application-easyroute
 %{MODINSTDIR}/mod_easyroute.so*
+
+#%files application-enum
+#%{MODINSTDIR}/mod_enum.so*
 
 %files application-esf
 %{MODINSTDIR}/mod_esf.so*
@@ -2058,14 +2107,20 @@ fi
 #%files endpoint-khomp
 #%{MODINSTDIR}/mod_khomp.so*
 
-%files endpoint-portaudio
-%{MODINSTDIR}/mod_portaudio.so*
+#%files endpoint-portaudio
+#%{MODINSTDIR}/mod_portaudio.so*
 
 %files endpoint-rtmp
 %{MODINSTDIR}/mod_rtmp.so*
 
 %files endpoint-skinny
 %{MODINSTDIR}/mod_skinny.so*
+
+%files endpoint-verto
+%{MODINSTDIR}/mod_verto.so*
+
+%files endpoint-rtc
+%{MODINSTDIR}/mod_rtc.so*
 
 %files endpoint-skypopen
 %{MODINSTDIR}/mod_skypopen.so*
@@ -2106,11 +2161,14 @@ fi
 %files event-cdr-mongodb
 %{MODINSTDIR}/mod_cdr_mongodb.so*
 
-%files event-cdr-pg-csv
-%{MODINSTDIR}/mod_cdr_pg_csv.so*
+#%files event-cdr-pg-csv
+#%{MODINSTDIR}/mod_cdr_pg_csv.so*
 
 %files event-cdr-sqlite
 %{MODINSTDIR}/mod_cdr_sqlite.so*
+
+#%files event-erlang-event
+#%{MODINSTDIR}/mod_erlang_event.so*
 
 %files event-multicast
 %{MODINSTDIR}/mod_event_multicast.so*
@@ -2141,8 +2199,8 @@ fi
 %files format-native-file
 %{MODINSTDIR}/mod_native_file.so*
 
-%files format-portaudio-stream
-%{MODINSTDIR}/mod_portaudio_stream.so*
+#%files format-portaudio-stream
+#%{MODINSTDIR}/mod_portaudio_stream.so*
 
 %files format-shell-stream
 %{MODINSTDIR}/mod_shell_stream.so*
@@ -2181,15 +2239,6 @@ fi
 %attr(0755, root, bin) /usr/lib/python*/site-packages/ESL.py*
 %dir %attr(0750, freeswitch, daemon) %{sysconfdir}/autoload_configs
 %config(noreplace) %attr(0640, freeswitch, daemon) %{sysconfdir}/autoload_configs/python.conf.xml
-
-%files spidermonkey
-#%{MODINSTDIR}/mod_spidermonkey*.so*
-#%{LIBDIR}/libjs.so*
-#%{LIBDIR}/libnspr4.so
-#%{LIBDIR}/libplds4.so
-#%{LIBDIR}/libplc4.so
-%dir %attr(0750, freeswitch, daemon) %{sysconfdir}/autoload_configs
-%config(noreplace) %attr(0640, freeswitch, daemon) %{sysconfdir}/autoload_configs/spidermonkey.conf.xml
 
 %files v8
 #%{MODINSTDIR}/mod_v8*.so*
@@ -2320,6 +2369,12 @@ fi
 #
 ######################################################################################################################
 %changelog
+* Thu Sep 11 2014 - krice@freeswitch.org
+- add and fix mod_verto and mod_rtc
+* Fri Jul 20 2014 - krice@freeswitch.org
+- remove mod_cdr_pg_csv as its broken on centos
+* Mon Jun 02 2014 - krice@freeswitch.org
+- remove mod_spidermoney as its been deprecated
 * Fri Feb 21 2014 - crienzo@grasshopper.com
 - change file owner to root
 * Wed Feb 19 2014 - crienzo@grasshopper.com
@@ -2331,11 +2386,11 @@ fi
 * Mon Dec 09 2013 - crienzo@grasshopper.com
 - Add mod_ssml, mod_rayo
 - Fix build on master
-* Thu Jun 28 2013 - krice@freeswitch.org
+* Fri Jun 28 2013 - krice@freeswitch.org
 - Add module for VP8
-* Thu Jun 19 2013 - krice@freeswitch.org
+* Wed Jun 19 2013 - krice@freeswitch.org
 - tweak files included for vanilla configs
-* Thu Sep 19 2012 - krice@freeswitch.org
+* Wed Sep 19 2012 - krice@freeswitch.org
 - Add support for Spanish and Portugese say language modules
 * Thu Jan 26 2012 - krice@freeswitch.org
 - complete rework of spec file
@@ -2417,10 +2472,10 @@ fi
 - added directory files to russian language
 * Sat Nov 21 2009 - michal.bielicki@seventhsignal.de
 - added patch by Igor Neves <neves.igor@gmail.com>: Added some checkup in %post and %postun to prevent upgrades from removing freeswitch user
-* Thu Nov 18 2009 - michal.bielicki@seventhsignal.de
+* Wed Nov 18 2009 - michal.bielicki@seventhsignal.de
 - added new config files for diretory and distributor
 - removed sangoma boost from openzap for builds that do not inherit wanpipe while building.
-* Tue Jul 24 2009 - mike@jerris.com
+* Fri Jul 24 2009 - mike@jerris.com
 - removed mod_http
 - removed ozmod_wanpipe
 * Tue Jun 23 2009 - raulfragoso@gmail.com
@@ -2428,7 +2483,7 @@ fi
 - Included new config and mod files to catch up with latest SVN
 - Included new sound files for base256 and zrtp
 - mod_unimrcp must be built after mod_sofia
-* Mon Feb 17 2009 - michal.bielicki@halokwadrat.de
+* Tue Feb 17 2009 - michal.bielicki@halokwadrat.de
 - added mod_python
 - added mod_fax
 - added mod_amrwb.so
@@ -2465,7 +2520,7 @@ fi
 - abstraction of mkdir, mv, rm, install etc into macros
 * Fri Jan 18 2008 - michal.bielicki@voiceworks.pl
 - fixes, fixes and more fixes in preparation for rc1
-* Thu Dec 5 2007 - michal.bielicki@voiceworks.pl
+* Wed Dec 5 2007 - michal.bielicki@voiceworks.pl
 - put in detail configfiles in to split of spidermonkey configs
 - created link from /opt/freesxwitch/conf to /etc%{prefix}
 * Thu Nov 29 2007 - michal.bielicki@voiceworks.pl
