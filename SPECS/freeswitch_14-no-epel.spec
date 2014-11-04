@@ -45,7 +45,7 @@
 %{?with_timerfd:%define build_timerfd 1 }
 %{?with_mod_esl:%define build_mod_esl 1 }
 
-%define version 1.4.12
+%define version 1.4.13
 %define release 1
 
 ######################################################################################################################
