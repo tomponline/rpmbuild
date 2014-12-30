@@ -1,6 +1,6 @@
 Summary: Dovecot Secure imap server
 Name: dovecot
-Version: 2.1.14
+Version: 2.2.15
 Release: 1
 Epoch: 1
 License: LGPL
@@ -12,7 +12,7 @@ URL: http://www.dovecot.org/
 Buildroot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: openssl-devel
 BuildRequires: zlib-devel
-Prereq: openssl >= 0.9.7f-4, /sbin/chkconfig, /usr/sbin/useradd
+Requires: openssl >= 0.9.7f-4, /sbin/chkconfig, /usr/sbin/useradd
 
 %define dovecot_uid 97
 %define dovecot_gid 97
