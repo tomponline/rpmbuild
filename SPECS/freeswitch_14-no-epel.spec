@@ -45,7 +45,7 @@
 %{?with_timerfd:%define build_timerfd 1 }
 %{?with_mod_esl:%define build_mod_esl 1 }
 
-%define version 1.4.14
+%define version 1.4.15
 %define release 1
 
 ######################################################################################################################
@@ -1028,6 +1028,18 @@ BuildRequires:	net-snmp-devel
 SNMP stats reporter for the FreeSWITCH open source telephony platform
 
 ######################################################################################################################
+#                               FreeSWITCH Logger Modules
+######################################################################################################################
+
+%package logger-graylog2
+Summary:        GELF logger for Graylog2 and Logstash
+Group:          System/Libraries
+Requires:       %{name} = %{version}-%{release}
+
+%description logger-graylog2
+GELF logger for Graylog2 and Logstash
+
+######################################################################################################################
 #				FreeSWITCH Media Format Modules
 ######################################################################################################################
 
@@ -1462,7 +1474,7 @@ LANGUAGES_MODULES="languages/mod_lua languages/mod_perl languages/mod_python "
 #						Logging Modules
 #
 ######################################################################################################################
-LOGGERS_MODULES="loggers/mod_console loggers/mod_logfile loggers/mod_syslog"
+LOGGERS_MODULES="loggers/mod_console loggers/mod_graylog2 loggers/mod_logfile loggers/mod_syslog"
 
 ######################################################################################################################
 #
@@ -1805,6 +1817,7 @@ fi
 %config(noreplace) %attr(0640, freeswitch, daemon) %{sysconfdir}/autoload_configs/fax.conf.xml
 %config(noreplace) %attr(0640, freeswitch, daemon) %{sysconfdir}/autoload_configs/fifo.conf.xml
 %config(noreplace) %attr(0640, freeswitch, daemon) %{sysconfdir}/autoload_configs/format_cdr.conf.xml
+%config(noreplace) %attr(0640, freeswitch, daemon) %{sysconfdir}/autoload_configs/graylog2.conf.xml
 %config(noreplace) %attr(0640, freeswitch, daemon) %{sysconfdir}/autoload_configs/hash.conf.xml
 %config(noreplace) %attr(0640, freeswitch, daemon) %{sysconfdir}/autoload_configs/httapi.conf.xml
 %config(noreplace) %attr(0640, freeswitch, daemon) %{sysconfdir}/autoload_configs/http_cache.conf.xml
@@ -2339,6 +2352,15 @@ fi
 
 ######################################################################################################################
 #
+#                                               Logger Modules
+#
+######################################################################################################################
+
+%files logger-graylog2
+%{MODINSTDIR}/mod_graylog2.so*
+
+######################################################################################################################
+#
 #					Timer Modules
 #
 ######################################################################################################################
@@ -2369,6 +2391,8 @@ fi
 #
 ######################################################################################################################
 %changelog
+* Tue Nov 04 2014 - crienzo@grasshopper.com
+- add mod_graylog2 and mod_mongo
 * Thu Sep 11 2014 - krice@freeswitch.org
 - add and fix mod_verto and mod_rtc
 * Fri Jul 20 2014 - krice@freeswitch.org
