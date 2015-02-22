@@ -1,6 +1,6 @@
-Summary: Dovecot Secure imap server
+Summary: Pure-FTPD server
 Name: pure-ftpd
-Version: 1.0.36
+Version: 1.0.37
 Release: 1
 License: LGPL
 Group: System Environment/Daemons
@@ -9,7 +9,7 @@ Source: %{name}-%{version}.tar.bz2
 Source1: %{name}.init
 URL: http://www.pureftpd.org
 Buildroot: %{_tmppath}/%{name}-%{version}-%{release}-root
-Prereq: /sbin/chkconfig
+Requires: /sbin/chkconfig
 
 %description
 Pure-FTPD
