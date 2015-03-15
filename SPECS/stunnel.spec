@@ -17,7 +17,8 @@ Secure tunnel daemon
 %build
 #Run main configure script
 ./configure \
-	--prefix=%{_prefix}
+	--prefix=%{_prefix} \
+        --sysconfdir=/etc
 make
 
 %install
