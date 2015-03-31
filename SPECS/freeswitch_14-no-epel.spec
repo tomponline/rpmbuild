@@ -11,7 +11,7 @@
 #
 # This file is part of:
 # FreeSWITCH Modular Media Switching Software Library / Soft-Switch Application
-# Copyright (C) 2005-2014, Anthony Minessale II <anthm@freeswitch.org>
+# Copyright (C) 2005-2015, Anthony Minessale II <anthm@freeswitch.org>
 #
 # This file and all modifications and additions to the pristine package are under the same license as the package itself.
 #
@@ -45,7 +45,7 @@
 %{?with_timerfd:%define build_timerfd 1 }
 %{?with_mod_esl:%define build_mod_esl 1 }
 
-%define version 1.4.17
+%define version 1.4.18
 %define release 1
 
 ######################################################################################################################
@@ -126,9 +126,9 @@ Source7:	http://files.freeswitch.org/downloads/libs/soundtouch-1.7.1.tar.gz
 Source8:	http://files.freeswitch.org/downloads/libs/sphinxbase-0.8.tar.gz
 Source9:	http://files.freeswitch.org/downloads/libs/communicator_semi_6000_20080321.tar.gz
 Source10:	http://files.freeswitch.org/downloads/libs/libmemcached-0.32.tar.gz
-Source11:       http://files.freeswitch.org/downloads/libs/json-c-0.9.tar.gz
-Source12:       http://files.freeswitch.org/downloads/libs/opus-1.1-p2.tar.gz
-#Source13:       http://files.freeswitch.org/downloads/libs/v8-3.24.14.tar.bz2
+Source11:       http://files.freeswitch.org/downloads/libs/opus-1.1-p2.tar.gz
+Source12:       http://files.freeswitch.org/downloads/libs/v8-3.24.14.tar.bz2
+#Source13:       http://files.freeswitch.org/downloads/libs/mongo-c-driver-1.1.0.tar.gz
 Prefix:        	%{prefix}
 
 
@@ -187,6 +187,7 @@ BuildRequires: libxml2-devel
 BuildRequires: bison
 BuildRequires: net-snmp-devel
 BuildRequires: libmemcached-devel
+BuildRequires: portaudio-devel
 %if %{build_py26_esl}
 BuildRequires: python26-devel
 Requires: python26
@@ -480,6 +481,14 @@ Provides FreeSWITCH mod_memcache, implements an API interface to memcached which
 is a "high-performance, distributed memory object caching system, generic in 
 nature, but intended for use in speeding up dynamic web applications by 
 alleviating database load." 
+
+#%package application-mongo
+#Summary:	FreeSWITCH mod_mongo
+#Group:		System/Libraries
+#Requires:	%{name} = %{version}-%{release}
+
+#%description application-mongo
+#Provides FreeSWITCH mod_mongo, which implements an API interface to mongodb.
 
 %package application-nibblebill
 Summary:	FreeSWITCH mod_nibblebill
@@ -838,15 +847,15 @@ to be used as a client for GoogleTalk or other XMPP Servers.
 #%description endpoint-khomp
 #Khomp hardware endpoint support for FreeSWITCH open source telephony platform.
 
-#%package endpoint-portaudio
-#Summary:        PortAudio endpoint support for FreeSWITCH open source telephony platform
-#Group:          System/Libraries
-#Requires:       %{name} = %{version}-%{release}
-#Requires:	alsa-lib
-#BuildRequires:	alsa-lib-devel
+%package endpoint-portaudio
+Summary:        PortAudio endpoint support for FreeSWITCH open source telephony platform
+Group:          System/Libraries
+Requires:       %{name} = %{version}-%{release}
+Requires:	alsa-lib
+BuildRequires:	alsa-lib-devel
 
-#%description endpoint-portaudio
-#PortAudio endpoint support for FreeSWITCH open source telephony platform.
+%description endpoint-portaudio
+PortAudio endpoint support for FreeSWITCH open source telephony platform.
 
 %package endpoint-rtmp
 Summary:        RTPM Endpoint support for FreeSWITCH open source telephony platform
@@ -946,13 +955,13 @@ bridged, originated, answered, etc. as in all other endpoints, e.g. Sofia-SIP).
 #				FreeSWITCH Event Handler Modules
 ######################################################################################################################
 
-%package event-cdr-mongodb
-Summary:	MongoDB CDR Logger for the FreeSWITCH open source telephony platform
-Group:		System/Libraries
-Requires:	 %{name} = %{version}-%{release}
+#%package event-cdr-mongodb
+#Summary:	MongoDB CDR Logger for the FreeSWITCH open source telephony platform
+#Group:		System/Libraries
+#Requires:	 %{name} = %{version}-%{release}
 
-%description event-cdr-mongodb
-MongoDB CDR Logger for FreeSWITCH
+#%description event-cdr-mongodb
+#MongoDB CDR Logger for FreeSWITCH
 
 %package event-cdr-pg-csv
 Summary:	PostgreSQL CDR Logger for the FreeSWITCH open source telephony platform
@@ -1028,13 +1037,13 @@ BuildRequires:	net-snmp-devel
 SNMP stats reporter for the FreeSWITCH open source telephony platform
 
 ######################################################################################################################
-#                               FreeSWITCH Logger Modules
+#				FreeSWITCH Logger Modules
 ######################################################################################################################
 
 %package logger-graylog2
-Summary:        GELF logger for Graylog2 and Logstash
-Group:          System/Libraries
-Requires:       %{name} = %{version}-%{release}
+Summary:	GELF logger for Graylog2 and Logstash
+Group:		System/Libraries
+Requires:	%{name} = %{version}-%{release}
 
 %description logger-graylog2
 GELF logger for Graylog2 and Logstash
@@ -1065,13 +1074,13 @@ transcoding is necessary. The default FreeSWITCH sound files are in wav format.
 Generally, these require transcoding when being played to callers. However, if
 a native format sound file is available then FreeSWITCH can use it. 
 
-#%package format-portaudio-stream
-#Summary:	PortAudio Media Steam support for the FreeSWITCH open source telephony platform
-#Group:		System/Libraries
-#Requires:	%{name} = %{version}-%{release}
+%package format-portaudio-stream
+Summary:	PortAudio Media Steam support for the FreeSWITCH open source telephony platform
+Group:		System/Libraries
+Requires:	%{name} = %{version}-%{release}
 
-#%description format-portaudio-stream
-#Portaudio Streaming interface Audio for FreeSWITCH
+%description format-portaudio-stream
+Portaudio Streaming interface Audio for FreeSWITCH
 
 %package format-shell-stream
 Summary:	Implements Media Steaming from arbitrary shell commands for the FreeSWITCH open source telephony platform
@@ -1316,7 +1325,7 @@ Requires:	freeswitch-codec-ilbc
 Requires:	freeswitch-codec-siren
 Requires:	freeswitch-format-local-stream
 Requires:	freeswitch-format-native-file
-#Requires:	freeswitch-format-portaudio-stream
+Requires:	freeswitch-format-portaudio-stream
 Requires:	freeswitch-format-tone-stream
 Requires:	freeswitch-lang-en
 
@@ -1431,7 +1440,7 @@ DIRECTORIES_MODULES=""
 #
 ######################################################################################################################
 ENDPOINTS_MODULES="endpoints/mod_dingaling ../../libs/freetdm/mod_freetdm \
-			endpoints/mod_loopback endpoints/mod_rtmp \
+			endpoints/mod_loopback endpoints/mod_portaudio endpoints/mod_rtmp \
 			endpoints/mod_skinny endpoints/mod_verto endpoints/mod_rtc endpoints/mod_skypopen endpoints/mod_sofia"
 
 ## DISABLED MODULES DUE TO BUILD ISSUES endpoints/mod_gsmopen endpoints/mod_h323 endpoints/mod_khomp 
@@ -1442,7 +1451,7 @@ ENDPOINTS_MODULES="endpoints/mod_dingaling ../../libs/freetdm/mod_freetdm \
 #
 ######################################################################################################################
 EVENT_HANDLERS_MODULES="event_handlers/mod_cdr_csv event_handlers/mod_cdr_sqlite \
-			event_handlers/mod_cdr_mongodb event_handlers/mod_event_multicast \
+			event_handlers/mod_event_multicast \
 			event_handlers/mod_event_socket event_handlers/mod_json_cdr \
 			event_handlers/mod_snmp"
 %if %{build_mod_rayo}
@@ -1455,7 +1464,7 @@ EVENT_HANDLERS_MODULES+=" event_handlers/mod_rayo"
 #					File and Audio Format Handlers
 #
 ######################################################################################################################
-FORMATS_MODULES="formats/mod_local_stream formats/mod_native_file \
+FORMATS_MODULES="formats/mod_local_stream formats/mod_native_file formats/mod_portaudio_stream \
                  formats/mod_shell_stream formats/mod_shout formats/mod_sndfile formats/mod_tone_stream"
 %if %{build_mod_ssml}
 FORMATS_MODULES+=" formats/mod_ssml"
@@ -1979,6 +1988,9 @@ fi
 %files application-memcache
 %{MODINSTDIR}/mod_memcache.so*
 
+#%files application-mongo
+#%{MODINSTDIR}/mod_mongo.so*
+
 %files application-nibblebill
 %{MODINSTDIR}/mod_nibblebill.so*
 
@@ -2120,8 +2132,8 @@ fi
 #%files endpoint-khomp
 #%{MODINSTDIR}/mod_khomp.so*
 
-#%files endpoint-portaudio
-#%{MODINSTDIR}/mod_portaudio.so*
+%files endpoint-portaudio
+%{MODINSTDIR}/mod_portaudio.so*
 
 %files endpoint-rtmp
 %{MODINSTDIR}/mod_rtmp.so*
@@ -2171,8 +2183,8 @@ fi
 #
 ######################################################################################################################
 
-%files event-cdr-mongodb
-%{MODINSTDIR}/mod_cdr_mongodb.so*
+#%files event-cdr-mongodb
+#%{MODINSTDIR}/mod_cdr_mongodb.so*
 
 #%files event-cdr-pg-csv
 #%{MODINSTDIR}/mod_cdr_pg_csv.so*
@@ -2212,8 +2224,8 @@ fi
 %files format-native-file
 %{MODINSTDIR}/mod_native_file.so*
 
-#%files format-portaudio-stream
-#%{MODINSTDIR}/mod_portaudio_stream.so*
+%files format-portaudio-stream
+%{MODINSTDIR}/mod_portaudio_stream.so*
 
 %files format-shell-stream
 %{MODINSTDIR}/mod_shell_stream.so*
@@ -2352,7 +2364,7 @@ fi
 
 ######################################################################################################################
 #
-#                                               Logger Modules
+#						Logger Modules
 #
 ######################################################################################################################
 
