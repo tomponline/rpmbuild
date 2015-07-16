@@ -1,6 +1,6 @@
 Summary: Stunnel
 Name: stunnel
-Version: 5.11
+Version: 5.20
 Release: 1
 URL: https://www.stunnel.org
 Source0: %{name}-%{version}.tar.gz
