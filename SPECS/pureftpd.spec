@@ -1,6 +1,6 @@
 Summary: Pure-FTPD server
 Name: pure-ftpd
-Version: 1.0.37
+Version: 1.0.42
 Release: 1
 License: LGPL
 Group: System Environment/Daemons
