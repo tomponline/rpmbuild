@@ -5,7 +5,7 @@
 Summary: Apache HTTP Server
 Name: httpd
 Version: 2.4.16
-Release: 1
+Release: 2
 Epoch: 1
 URL: http://httpd.apache.org/
 Vendor: Apache Software Foundation
@@ -16,6 +16,7 @@ Source3: httpd_syslog
 Source4: httpd.logging.conf
 Source5: httpd.timeout.conf
 Source6: httpd.mpmprefork.conf
+Source7: httpd.logrotate
 License: Apache License, Version 2.0
 Group: System Environment/Daemons
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
@@ -200,7 +201,7 @@ install -m755 ./build/rpm/htcacheclean.init \
 
 # install log rotation stuff
 mkdir -p $RPM_BUILD_ROOT/etc/logrotate.d
-install -m644 ./build/rpm/httpd.logrotate \
+install -m644 $RPM_SOURCE_DIR/httpd.logrotate \
 	$RPM_BUILD_ROOT/etc/logrotate.d/httpd
 
 # Remove unpackaged files

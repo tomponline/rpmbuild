@@ -3,6 +3,7 @@
     notifempty
     sharedscripts
     postrotate
-        /sbin/service httpd reload > /dev/null 2>/dev/null || true
+	/sbin/service httpd graceful &> /dev/null || true
     endscript
 }
+
