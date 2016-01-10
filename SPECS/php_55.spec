@@ -3,7 +3,7 @@
 
 Summary: The PHP HTML-embedded scripting language. (PHP: Hypertext Preprocessor)
 Name: php
-Version: 5.5.30
+Version: 5.5.31
 Release: 1
 License: The PHP License v3.01
 Group: Development/Languages
