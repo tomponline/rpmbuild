@@ -1,7 +1,7 @@
 %global __os_install_post %{nil}
 Summary: Google Go language compiler
 Name: golang
-Version: 1.5.1
+Version: 1.5.3
 Release: 1
 URL: https://golang.org/dl/
 Source0: go%{version}.linux-386.tar.gz
