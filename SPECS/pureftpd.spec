@@ -28,7 +28,8 @@ Pure-FTPD
         --without-usernames \
         --with-quotas \
 	--without-inetd \
-        --with-puredb 
+        --with-puredb \
+	--with-tls
 make
 
 %install
