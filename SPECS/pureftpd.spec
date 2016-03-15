@@ -1,7 +1,7 @@
 Summary: Pure-FTPD server
 Name: pure-ftpd
 Version: 1.0.42
-Release: 2
+Release: 3
 License: LGPL
 Group: System Environment/Daemons
 
@@ -29,7 +29,8 @@ Pure-FTPD
         --with-quotas \
 	--without-inetd \
         --with-puredb \
-	--with-tls
+	--with-tls \
+	--with-certfile=/etc/pki/tls/private/pure-ftpd.pem
 make
 
 %install
