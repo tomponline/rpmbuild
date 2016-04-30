@@ -4,7 +4,7 @@
 
 Summary: Apache HTTP Server
 Name: httpd
-Version: 2.4.18
+Version: 2.4.20
 Release: 1
 Epoch: 1
 URL: http://httpd.apache.org/
