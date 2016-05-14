@@ -1,5 +1,5 @@
 [netvps-centos]
 name=NetVPS CentOS RPMs
-baseurl=http://yum.netvps.co.uk/centos/$releasever/
+baseurl=http://yum.webisp.uk/centos/$releasever/
 gpgcheck=0
 
