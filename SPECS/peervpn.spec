@@ -1,5 +1,5 @@
 %global major 0
-%global minor 042
+%global minor 044
 
 Name:               peervpn
 Version:            %{major}.%{minor}
