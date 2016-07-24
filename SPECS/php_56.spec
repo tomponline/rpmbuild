@@ -3,7 +3,7 @@
 
 Summary: The PHP HTML-embedded scripting language. (PHP: Hypertext Preprocessor)
 Name: php
-Version: 5.6.21
+Version: 5.6.22
 Release: 1
 License: The PHP License v3.01
 Group: Development/Languages
@@ -19,7 +19,7 @@ BuildRequires: gcc, binutils, libtool
 BuildRequires: curl-devel >= 7.9, httpd >= 2.2, libstdc++-devel, openssl-devel, zlib-devel
 BuildRequires: fileutils, file >= 4.0, perl, gcc-c++, readline-devel
 BuildRequires: curl-devel, libjpeg-devel, libpng-devel, libxml2-devel, freetype-devel, 
-BuildRequires: libmcrypt-devel, libxslt-devel, libc-client-devel, krb5-devel
+BuildRequires: libmcrypt-devel, libxslt-devel, libc-client-devel, krb5-devel, libexif-devel
 Requires: 	file >= 4.0, php-common = %{version}-%{release}, 
 Requires:	php-cli = %{version}-%{release}, php-pdo = %{version}-%{release},
 Obsoletes: 	php-mhash
@@ -148,6 +148,14 @@ Requires: php = %{version}-%{release}, libc-client
 %description imap
 Provides IMAP module in PHP
 
+%package exif
+Group: Development/Languages
+Summary: EXIF module in PHP
+Requires: php = %{version}-%{release}, 
+
+%description exif
+Provides EXIF module in PHP
+
 %package cli
 Group: Development/Languages
 Summary: CLI executable for PHP
@@ -240,6 +248,7 @@ fi
 	--with-imap=shared,%{_prefix} \
 	--with-imap-ssl=%{_prefix} \
 	--with-readline \
+	--enable-exif=shared \
 	--with-kerberos=%{_prefix}
 make %{?_smp_mflags}
 
@@ -293,6 +302,7 @@ echo "extension=pcntl.so" >  $RPM_BUILD_ROOT%{_sysconfdir}/php.d/pcntl.ini
 echo "extension=gettext.so" >  $RPM_BUILD_ROOT%{_sysconfdir}/php.d/gettext.ini
 echo "extension=ftp.so" >  $RPM_BUILD_ROOT%{_sysconfdir}/php.d/ftp.ini
 echo "extension=imap.so" >  $RPM_BUILD_ROOT%{_sysconfdir}/php.d/imap.ini
+echo "extension=exif.so" >  $RPM_BUILD_ROOT%{_sysconfdir}/php.d/exif.ini
 echo "zend_extension=opcache.so" > $RPM_BUILD_ROOT%{_sysconfdir}/php.d/opcache.ini
 
 %clean
@@ -401,6 +411,11 @@ fi
 %defattr(-,root,root)
 %config(noreplace) /etc/php.d/imap.ini
 %{_libdir}/php/extensions/%{apiver}/imap.so
+
+%files exif
+%defattr(-,root,root)
+%config(noreplace) /etc/php.d/exif.ini
+%{_libdir}/php/extensions/%{apiver}/exif.so
 
 %files cli
 
