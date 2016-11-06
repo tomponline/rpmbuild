@@ -1,10 +1,10 @@
 %global __os_install_post %{nil}
 Summary: Google Go language compiler
 Name: golang
-Version: 1.6
+Version: 1.7.3
 Release: 1
 URL: https://golang.org/dl/
-Source0: go%{version}.linux-386.tar.gz
+Source0: go%{version}.linux-amd64.tar.gz
 License: https://golang.org/LICENSE
 Group: System Environment/Daemons
 BuildRoot: %{_tmppath}/%{name}-root
