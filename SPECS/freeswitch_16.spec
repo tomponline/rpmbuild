@@ -182,7 +182,6 @@ BuildRequires: bison
 BuildRequires: net-snmp-devel
 BuildRequires: libmemcached-devel
 BuildRequires: libsndfile-devel
-#BuildRequires: flite-devel
 #BuildRequires: ilbc2-devel 
 #BuildRequires: g722_1-devel
 #BuildRequires: libsilk-devel
@@ -617,14 +616,6 @@ system for backend voicemail systems
 ######################################################################################################################
 #				FreeSWITCH ASR TTS Modules
 ######################################################################################################################
-
-%package asrtts-flite
-Summary:	FreeSWITCH mod_flite
-Group:          System/Libraries
-Requires:       %{name} = %{version}-%{release}
-
-%description asrtts-flite
-Provides FreeSWITCH mod_flite, a interface to the flite text to speech engine
 
 %package asrtts-pocketsphinx
 Summary:	FreeSWITCH mod_pocketsphinx
@@ -1375,7 +1366,7 @@ APPLICATIONS_MODULES="$APPLICATION_MODULES_AC $APPLICATION_MODULES_DE $APPLICATI
 #				Automatic Speech Recognition and Text To Speech Modules
 #
 ######################################################################################################################
-ASR_TTS_MODULES="asr_tts/mod_flite asr_tts/mod_pocketsphinx asr_tts/mod_tts_commandline asr_tts/mod_unimrcp"
+ASR_TTS_MODULES="asr_tts/mod_pocketsphinx asr_tts/mod_tts_commandline asr_tts/mod_unimrcp"
 
 ######################################################################################################################
 #
@@ -2045,8 +2036,6 @@ fi
 #						ASR TTS Packages
 #
 ######################################################################################################################
-%files asrtts-flite
-%{MODINSTDIR}/mod_flite.so*
 
 %files asrtts-pocketsphinx
 %{MODINSTDIR}/mod_pocketsphinx.so*
