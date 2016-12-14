@@ -122,6 +122,7 @@ Source3:	http://files.freeswitch.org/downloads/libs/pocketsphinx-0.8.tar.gz
 Source4:	http://files.freeswitch.org/downloads/libs/sphinxbase-0.8.tar.gz
 Source5:	http://files.freeswitch.org/downloads/libs/communicator_semi_6000_20080321.tar.gz
 Source6:	http://files.freeswitch.org/downloads/libs/libmemcached-0.32.tar.gz
+Source7:	http://files.freeswitch.org/downloads/libs/freeradius-client-1.1.6.tar.gz
 Prefix:        	%{prefix}
 
 
@@ -182,14 +183,10 @@ BuildRequires: bison
 BuildRequires: net-snmp-devel
 BuildRequires: libmemcached-devel
 BuildRequires: libsndfile-devel
-#BuildRequires: ilbc2-devel 
-#BuildRequires: g722_1-devel
-#BuildRequires: libsilk-devel
 #BuildRequires: libvpx2-devel >= 2.0.0
 #BuildRequires: libyuv-devel >= 0.0.1280
 BuildRequires: lua-devel
 #BuildRequires: opus-devel
-#BuildRequires: soundtouch-devel >= 1.7.1
 %if %{build_py26_esl}
 BuildRequires: python26-devel
 Requires: python26
@@ -549,17 +546,6 @@ Requires:       %{name} = %{version}-%{release}
 Provides FreeSWITCH mod_snom, an application for controlling the functionality 
 and appearance of the programmable softkeys on Snom phones
 
-%package application-soundtouch
-Summary:	FreeSWITCH mod_soundtouch
-Group:          System/Libraries
-Requires:       %{name} = %{version}-%{release}
-
-%description application-soundtouch
-Provides FreeSWITCH mod_soundtouch, uses the soundtouch library, which can do
-pitch shifting and other audio effects, so you can pipe the audio of a call
-(or any other channel audio) through this module and achieve those effects. You
-can specifically adjust pitch, rate, and tempo.
-
 %package application-spy
 Summary:	FreeSWITCH mod_spy
 Group:          System/Libraries
@@ -692,14 +678,6 @@ Requires:       %{name} = %{version}-%{release}
 %description codec-h26x
 H.263/H.264 Video Codec support for FreeSWITCH open source telephony platform
 
-%package codec-ilbc
-Summary:        iLCB Codec support for FreeSWITCH open source telephony platform
-Group:          System/Libraries
-Requires:       %{name} = %{version}-%{release}
-
-%description codec-ilbc
-iLBC Codec support for FreeSWITCH open source telephony platform
-
 %package codec-isac
 Summary:        iSAC Codec support for FreeSWITCH open source telephony platform
 Group:          System/Libraries
@@ -744,27 +722,6 @@ BuildRequires: sng-tc-linux
 Sangoma D100 and D500 Codec Card Support
 
 %endif
-
-%package codec-silk
-Summary:        Silk Codec support for FreeSWITCH open source telephony platform
-Group:          System/Libraries
-Requires:       %{name} = %{version}-%{release}
-
-%description codec-silk
-Silk Codec (from Skype) support for FreeSWITCH open source telephony platform
-
-%package codec-siren
-Summary:        Siren Codec support for FreeSWITCH open source telephony platform
-Group:          System/Libraries
-Requires:       %{name} = %{version}-%{release}
-
-%description codec-siren
-Siren Codec support for FreeSWITCH open source telephony platform. Using 
-mod_siren in a commercial product will require you to acquire a patent license
-directly from Polycom(R) for your company. 
-see http://www.polycom.com/usa/en/company/about_us/technology/siren_g7221/siren_g7221.html 
-and http://www.polycom.com/usa/en/company/about_us/technology/siren14_g7221c/siren14_g7221c.html 
-At the time of this packaging, Polycom does not charge for licensing.
 
 %package codec-theora
 Summary:        Theora Video Codec support for FreeSWITCH open source telephony platform
@@ -1275,7 +1232,6 @@ Requires:	freeswitch-application-rss
 Requires:	freeswitch-application-sms
 Requires:	freeswitch-application-snapshot
 Requires:	freeswitch-application-snom
-Requires:	freeswitch-application-soundtouch
 Requires:	freeswitch-application-spy
 Requires:	freeswitch-application-stress
 Requires:	freeswitch-application-valet_parking
@@ -1286,8 +1242,6 @@ Requires:	freeswitch-codec-bv
 Requires:	freeswitch-codec-passthru-g723_1
 Requires:	freeswitch-codec-passthru-g729
 Requires:	freeswitch-codec-h26x
-Requires:	freeswitch-codec-ilbc
-Requires:	freeswitch-codec-siren
 Requires:	freeswitch-format-local-stream
 Requires:	freeswitch-format-native-file
 Requires:	freeswitch-format-tone-stream
@@ -1309,6 +1263,7 @@ cp %{SOURCE3} libs/
 cp %{SOURCE4} libs/
 cp %{SOURCE5} libs/
 cp %{SOURCE6} libs/
+cp %{SOURCE7} libs/
 
 #Hotfix for redefined %_sysconfdir
 sed -ie 's:confdir="${sysconfdir}/freeswitch":confdir="$sysconfdir":' ./configure.ac
@@ -1354,7 +1309,7 @@ APPLICATION_MODULES_FR="applications/mod_fifo applications/mod_fsk applications/
 			applications/mod_memcache applications/mod_nibblebill applications/mod_rad_auth \
 			applications/mod_redis applications/mod_rss "
 
-APPLICATION_MODULES_SZ="applications/mod_sms applications/mod_snapshot applications/mod_snom applications/mod_soundtouch \
+APPLICATION_MODULES_SZ="applications/mod_sms applications/mod_snapshot applications/mod_snom \
 			applications/mod_spandsp applications/mod_spy applications/mod_stress \
 			applications/mod_valet_parking applications/mod_translate applications/mod_voicemail \
 			applications/mod_voicemail_ivr"
@@ -1374,8 +1329,8 @@ ASR_TTS_MODULES="asr_tts/mod_pocketsphinx asr_tts/mod_tts_commandline asr_tts/mo
 #
 ######################################################################################################################
 CODECS_MODULES="codecs/mod_amr codecs/mod_amrwb codecs/mod_g723_1 \
-		codecs/mod_g729 codecs/mod_h26x codecs/mod_ilbc codecs/mod_isac codecs/mod_mp4v codecs/mod_opus codecs/mod_silk \
-		codecs/mod_siren codecs/mod_theora"
+		codecs/mod_g729 codecs/mod_h26x codecs/mod_isac codecs/mod_mp4v codecs/mod_opus \
+		codecs/mod_theora"
 #
 %if %{build_sng_tc}
 CODECS_MODULES+="codecs/mod_sangoma_codec"
@@ -2010,9 +1965,6 @@ fi
 %files application-snom
 %{MODINSTDIR}/mod_snom.so*
 
-%files application-soundtouch
-%{MODINSTDIR}/mod_soundtouch.so*
-
 %files application-spy
 %{MODINSTDIR}/mod_spy.so*
 
@@ -2067,9 +2019,6 @@ fi
 %files codec-h26x
 %{MODINSTDIR}/mod_h26x.so*
 
-%files codec-ilbc
-%{MODINSTDIR}/mod_ilbc.so*
-
 %files codec-isac
 %{MODINSTDIR}/mod_isac.so*
 
@@ -2084,12 +2033,6 @@ fi
 %files sangoma-codec
 %{MODINSTDIR}/mod_sangoma_codec.so*
 %endif
-
-%files codec-silk
-%{MODINSTDIR}/mod_silk.so*
-
-%files codec-siren
-%{MODINSTDIR}/mod_siren.so*
 
 %files codec-theora
 %{MODINSTDIR}/mod_theora.so*
