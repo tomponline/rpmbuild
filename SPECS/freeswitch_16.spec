@@ -118,7 +118,6 @@ Vendor:       	http://www.freeswitch.org/
 ######################################################################################################################
 Source0:        http://files.freeswitch.org/%{name}-%{version}.tar.bz2
 Source1:	http://files.freeswitch.org/downloads/libs/v8-3.24.14.tar.bz2
-Source2:	http://files.freeswitch.org/downloads/libs/mongo-c-driver-1.1.0.tar.gz
 Source3:	http://files.freeswitch.org/downloads/libs/pocketsphinx-0.8.tar.gz
 Source4:	http://files.freeswitch.org/downloads/libs/sphinxbase-0.8.tar.gz
 Source5:	http://files.freeswitch.org/downloads/libs/communicator_semi_6000_20080321.tar.gz
@@ -194,7 +193,6 @@ BuildRequires: libsilk-devel
 BuildRequires: libvpx2-devel >= 2.0.0
 BuildRequires: libyuv-devel >= 0.0.1280
 BuildRequires: lua-devel
-BuildRequires: mongo-c-driver-devel
 BuildRequires: opus-devel
 BuildRequires: soundtouch-devel >= 1.7.1
 %if %{build_py26_esl}
@@ -491,14 +489,6 @@ Provides FreeSWITCH mod_memcache, implements an API interface to memcached which
 is a "high-performance, distributed memory object caching system, generic in 
 nature, but intended for use in speeding up dynamic web applications by 
 alleviating database load." 
-
-%package application-mongo
-Summary:	FreeSWITCH mod_mongo
-Group:		System/Libraries
-Requires:	%{name} = %{version}-%{release}
-
-%description application-mongo
-Provides FreeSWITCH mod_mongo, which implements an API interface to mongodb.
 
 %package application-nibblebill
 Summary:	FreeSWITCH mod_nibblebill
@@ -972,15 +962,6 @@ bridged, originated, answered, etc. as in all other endpoints, e.g. Sofia-SIP).
 ######################################################################################################################
 #				FreeSWITCH Event Handler Modules
 ######################################################################################################################
-
-%package event-cdr-mongodb
-Summary:	MongoDB CDR Logger for the FreeSWITCH open source telephony platform
-Group:		System/Libraries
-Requires:	 %{name} = %{version}-%{release}
-
-%description event-cdr-mongodb
-MongoDB CDR Logger for FreeSWITCH
-
 %package event-cdr-pg-csv
 Summary:	PostgreSQL CDR Logger for the FreeSWITCH open source telephony platform
 Group:		System/Libraries
@@ -1420,7 +1401,7 @@ APPLICATION_MODULES_DE+="applications/mod_esl"
 
 APPLICATION_MODULES_FR="applications/mod_fifo applications/mod_fsk applications/mod_fsv applications/mod_hash \
 			applications/mod_httapi applications/mod_http_cache applications/mod_lcr applications/mod_limit \
-			applications/mod_memcache applications/mod_mongo applications/mod_nibblebill applications/mod_rad_auth \
+			applications/mod_memcache applications/mod_nibblebill applications/mod_rad_auth \
 			applications/mod_redis applications/mod_rss "
 
 APPLICATION_MODULES_SZ="applications/mod_sms applications/mod_snapshot applications/mod_snom applications/mod_soundtouch \
@@ -1481,7 +1462,7 @@ ENDPOINTS_MODULES="endpoints/mod_dingaling ../../libs/freetdm/mod_freetdm \
 #
 ######################################################################################################################
 EVENT_HANDLERS_MODULES="event_handlers/mod_cdr_csv event_handlers/mod_cdr_pg_csv event_handlers/mod_cdr_sqlite \
-			event_handlers/mod_cdr_mongodb event_handlers/mod_format_cdr event_handlers/mod_event_multicast \
+			event_handlers/mod_format_cdr event_handlers/mod_event_multicast \
 			event_handlers/mod_event_socket event_handlers/mod_json_cdr event_handlers/mod_radius_cdr \
 			event_handlers/mod_snmp"
 %if %{build_mod_rayo}
@@ -2058,9 +2039,6 @@ fi
 %files application-memcache
 %{MODINSTDIR}/mod_memcache.so*
 
-%files application-mongo
-%{MODINSTDIR}/mod_mongo.so*
-
 %files application-nibblebill
 %{MODINSTDIR}/mod_nibblebill.so*
 
@@ -2252,9 +2230,6 @@ fi
 #					Event Modules
 #
 ######################################################################################################################
-
-%files event-cdr-mongodb
-%{MODINSTDIR}/mod_cdr_mongodb.so*
 
 %files event-cdr-pg-csv
 %{MODINSTDIR}/mod_cdr_pg_csv.so*
