@@ -1,0 +1,82 @@
+#!/bin/sh
+#
+# pppoe-server: Starts the PPPoE Server.
+#
+# chkconfig: - 10 92
+# description:  pppoe-server is a user-space server for PPPoE (Point-to-Point Protocol over Eth- \
+#               ernet) for Linux and other UNIX systems.  pppoe-server works in concert with the \
+#               pppoe client to respond to PPPoE discovery packets and set up PPPoE sessions.
+# processname:  /sbin/pppoe-server
+# config:       /etc/ppp/pppoe-server-options
+
+. /etc/rc.d/init.d/functions
+RETVAL=0
+prog=pppoe-server
+
+check() {
+        # Check that we're a privileged user
+        [ `id -u` = 0 ] || exit 4
+
+        # Check if acpid is executable
+        test -x /sbin/$prog || exit 5
+}
+
+start() {
+        check
+        echo -n $"Starting $prog: "
+        daemon /sbin/$prog
+        RETVAL=$?
+        echo
+        [ $RETVAL -eq 0 ] && touch /var/lock/subsys/$prog
+        return $RETVAL
+}
+
+stop() {
+       check
+        echo -n $"Stopping $prog: "
+        killproc /sbin/$prog
+        RETVAL=$?
+        echo
+        [ $RETVAL -eq 0 ] && rm -f /var/lock/subsys/$prog
+        return $RETVAL
+}
+
+restart() {
+        stop
+        start
+}
+
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    restart)
+        restart
+        ;;
+    reload)
+        echo "$0: Unimplemented feature."
+        RETVAL=3
+        ;;
+    force-reload)
+        echo "$0: Unimplemented feature."
+        RETVAL=3
+        ;;
+    condrestart)
+        if [ -f /var/lock/subsys/pppoe-server ]; then
+            restart
+        fi
+        ;;
+    status)
+        status pppoe-server
+        RETVAL=$?
+        ;;
+    *)
+        echo $"Usage: $0 {start|stop|status|restart|condrestart|reload|force-reload}"
+        RETVAL=3
+        ;;
+esac
+
+exit $RETVAL
