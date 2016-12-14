@@ -999,16 +999,6 @@ Requires:	 %{name} = %{version}-%{release}
 %description event-cdr-sqlite
 SQLite CDR Logger for FreeSWITCH.
 
-%package event-erlang-event
-Summary:	Erlang Event Module for the FreeSWITCH open source telephony platform
-Group:		System/Libraries
-Requires:	 %{name} = %{version}-%{release}
-Requires:	erlang
-BuildRequires:	erlang
-
-%description event-erlang-event
-Erlang Event Module for FreeSWITCH.
-
 %package event-format-cdr
 Summary:        JSON and XML Logger for the FreeSWITCH open source telephony platform
 Group:          System/Libraries
@@ -1016,16 +1006,6 @@ Requires:        %{name} = %{version}-%{release}
 
 %description event-format-cdr
 JSON and XML Logger for the FreeSWITCH open source telephony platform
-
-%package kazoo
-Summary:	Kazoo Module for the FreeSWITCH open source telephony platform
-Group:		System/Libraries
-Requires:	 %{name} = %{version}-%{release}
-Requires:	erlang
-BuildRequires:	erlang
-
-%description kazoo
-Kazoo Module for FreeSWITCH.
 
 %package event-multicast
 Summary:	Multicast Event System for the FreeSWITCH open source telephony platform
@@ -1501,8 +1481,8 @@ ENDPOINTS_MODULES="endpoints/mod_dingaling ../../libs/freetdm/mod_freetdm \
 #
 ######################################################################################################################
 EVENT_HANDLERS_MODULES="event_handlers/mod_cdr_csv event_handlers/mod_cdr_pg_csv event_handlers/mod_cdr_sqlite \
-			event_handlers/mod_cdr_mongodb event_handlers/mod_format_cdr event_handlers/mod_erlang_event event_handlers/mod_event_multicast \
-			event_handlers/mod_event_socket event_handlers/mod_json_cdr event_handlers/mod_kazoo event_handlers/mod_radius_cdr \
+			event_handlers/mod_cdr_mongodb event_handlers/mod_format_cdr event_handlers/mod_event_multicast \
+			event_handlers/mod_event_socket event_handlers/mod_json_cdr event_handlers/mod_radius_cdr \
 			event_handlers/mod_snmp"
 %if %{build_mod_rayo}
 EVENT_HANDLERS_MODULES+=" event_handlers/mod_rayo"
@@ -1626,7 +1606,6 @@ fi
 --with-recordingsdir=%{RECORDINGSDIR} \
 --with-pkgconfigdir=%{PKGCONFIGDIR} \
 --with-odbc \
---with-erlang \
 --with-openssl \
 %{?configure_options}
 
@@ -2283,9 +2262,6 @@ fi
 %files event-cdr-sqlite
 %{MODINSTDIR}/mod_cdr_sqlite.so*
 
-%files event-erlang-event
-%{MODINSTDIR}/mod_erlang_event.so*
-
 %files event-format-cdr
 %{MODINSTDIR}/mod_format_cdr.so*
 
@@ -2297,9 +2273,6 @@ fi
 
 %files event-json-cdr
 %{MODINSTDIR}/mod_json_cdr.so*
-
-%files kazoo
-%{MODINSTDIR}/mod_kazoo.so*
 
 %files event-radius-cdr
 %{MODINSTDIR}/mod_radius_cdr.so*
