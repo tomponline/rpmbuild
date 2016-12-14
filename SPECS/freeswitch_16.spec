@@ -152,7 +152,6 @@ BuildRequires: sqlite-devel
 BuildRequires: ldns-devel
 BuildRequires: libedit-devel
 BuildRequires: perl
-BuildRequires: nasm
 BuildRequires: yasm
 %if 0%{?fedora} >= 8 || 0%{?rhel} >= 6
 BuildRequires: perl-ExtUtils-Embed
@@ -182,19 +181,16 @@ BuildRequires: libxml2-devel
 BuildRequires: bison
 BuildRequires: net-snmp-devel
 BuildRequires: libmemcached-devel
-BuildRequires: portaudio-devel
 BuildRequires: libsndfile-devel
-BuildRequires: broadvoice-devel
-BuildRequires: flite-devel
-BuildRequires: ilbc2-devel 
-BuildRequires: g722_1-devel
-BuildRequires: libcodec2-devel
-BuildRequires: libsilk-devel
-BuildRequires: libvpx2-devel >= 2.0.0
-BuildRequires: libyuv-devel >= 0.0.1280
+#BuildRequires: flite-devel
+#BuildRequires: ilbc2-devel 
+#BuildRequires: g722_1-devel
+#BuildRequires: libsilk-devel
+#BuildRequires: libvpx2-devel >= 2.0.0
+#BuildRequires: libyuv-devel >= 0.0.1280
 BuildRequires: lua-devel
-BuildRequires: opus-devel
-BuildRequires: soundtouch-devel >= 1.7.1
+#BuildRequires: opus-devel
+#BuildRequires: soundtouch-devel >= 1.7.1
 %if %{build_py26_esl}
 BuildRequires: python26-devel
 Requires: python26
@@ -679,23 +675,6 @@ Conflicts:      codec-amrwb
 %description codec-passthru-amrwb
 Pass-through AMR WideBand Codec support for FreeSWITCH open source telephony platform
 
-%package codec-bv
-Summary:        BroadVoice16 and BroadVoice32 WideBand Codec support for FreeSWITCH open source telephony platform
-Group:          System/Libraries
-Requires:       %{name} = %{version}-%{release}
-
-%description codec-bv
-BroadVoice16 and BroadVoice32 WideBand Codec support for FreeSWITCH open source telephony platform
-
-%package codec-codec2
-Summary:        Codec2 Narrow Band Codec support for FreeSWITCH open source telephony platform
-Group:          System/Libraries
-Requires:       %{name} = %{version}-%{release}
-
-%description codec-codec2
-CODEC2 narrow band codec support for FreeSWITCH open source telephony platform.
-CODEC2 was created by the developers of Speex.
-
 %package codec-passthru-g723_1
 Summary:        Pass-through g723.1 Codec support for FreeSWITCH open source telephony platform
 Group:          System/Libraries
@@ -854,16 +833,6 @@ to be used as a client for GoogleTalk or other XMPP Servers.
 #
 #%description endpoint-khomp
 #Khomp hardware endpoint support for FreeSWITCH open source telephony platform.
-
-%package endpoint-portaudio
-Summary:        PortAudio endpoint support for FreeSWITCH open source telephony platform
-Group:          System/Libraries
-Requires:       %{name} = %{version}-%{release}
-Requires:	alsa-lib
-BuildRequires:	alsa-lib-devel
-
-%description endpoint-portaudio
-PortAudio endpoint support for FreeSWITCH open source telephony platform.
 
 %package endpoint-rtmp
 Summary:        RTPM Endpoint support for FreeSWITCH open source telephony platform
@@ -1078,14 +1047,6 @@ The native file module is designed to make it easy to play sound files where no
 transcoding is necessary. The default FreeSWITCH sound files are in wav format.
 Generally, these require transcoding when being played to callers. However, if
 a native format sound file is available then FreeSWITCH can use it. 
-
-%package format-portaudio-stream
-Summary:	PortAudio Media Steam support for the FreeSWITCH open source telephony platform
-Group:		System/Libraries
-Requires:	%{name} = %{version}-%{release}
-
-%description format-portaudio-stream
-Portaudio Streaming interface Audio for FreeSWITCH
 
 %package format-shell-stream
 Summary:	Implements Media Steaming from arbitrary shell commands for the FreeSWITCH open source telephony platform
@@ -1338,7 +1299,6 @@ Requires:	freeswitch-codec-ilbc
 Requires:	freeswitch-codec-siren
 Requires:	freeswitch-format-local-stream
 Requires:	freeswitch-format-native-file
-Requires:	freeswitch-format-portaudio-stream
 Requires:	freeswitch-format-tone-stream
 Requires:	freeswitch-lang-en
 
@@ -1354,7 +1314,6 @@ Basic vanilla config set for the FreeSWITCH Open Source telephone platform.
 %prep
 %setup -b0 -q
 cp %{SOURCE1} libs/
-cp %{SOURCE2} libs/
 cp %{SOURCE3} libs/
 cp %{SOURCE4} libs/
 cp %{SOURCE5} libs/
@@ -1423,7 +1382,7 @@ ASR_TTS_MODULES="asr_tts/mod_flite asr_tts/mod_pocketsphinx asr_tts/mod_tts_comm
 #						Codecs
 #
 ######################################################################################################################
-CODECS_MODULES="codecs/mod_amr codecs/mod_amrwb codecs/mod_bv codecs/mod_codec2 codecs/mod_g723_1 \
+CODECS_MODULES="codecs/mod_amr codecs/mod_amrwb codecs/mod_g723_1 \
 		codecs/mod_g729 codecs/mod_h26x codecs/mod_ilbc codecs/mod_isac codecs/mod_mp4v codecs/mod_opus codecs/mod_silk \
 		codecs/mod_siren codecs/mod_theora"
 #
@@ -1451,7 +1410,7 @@ DIRECTORIES_MODULES=""
 #
 ######################################################################################################################
 ENDPOINTS_MODULES="endpoints/mod_dingaling ../../libs/freetdm/mod_freetdm \
-			endpoints/mod_loopback endpoints/mod_portaudio endpoints/mod_rtmp \
+			endpoints/mod_loopback endpoints/mod_rtmp \
 			endpoints/mod_skinny endpoints/mod_verto endpoints/mod_rtc endpoints/mod_skypopen endpoints/mod_sofia"
 
 ## DISABLED MODULES DUE TO BUILD ISSUES endpoints/mod_gsmopen endpoints/mod_h323 endpoints/mod_khomp 
@@ -1475,7 +1434,7 @@ EVENT_HANDLERS_MODULES+=" event_handlers/mod_rayo"
 #					File and Audio Format Handlers
 #
 ######################################################################################################################
-FORMATS_MODULES="formats/mod_local_stream formats/mod_native_file formats/mod_portaudio_stream \
+FORMATS_MODULES="formats/mod_local_stream formats/mod_native_file \
                  formats/mod_shell_stream formats/mod_sndfile formats/mod_tone_stream"
 %if %{build_mod_shout}
 FORMATS_MODULES+=" formats/mod_shout "
@@ -2110,13 +2069,6 @@ fi
 %files codec-passthru-amrwb
 %{MODINSTDIR}/mod_amrwb.so*
 
-%files codec-bv
-%{MODINSTDIR}/mod_bv.so*
-
-%files codec-codec2
-%{MODINSTDIR}/mod_codec2.so*
-
-
 %files codec-passthru-g723_1
 %{MODINSTDIR}/mod_g723_1.so*
 
@@ -2179,9 +2131,6 @@ fi
 
 #%files endpoint-khomp
 #%{MODINSTDIR}/mod_khomp.so*
-
-%files endpoint-portaudio
-%{MODINSTDIR}/mod_portaudio.so*
 
 %files endpoint-rtmp
 %{MODINSTDIR}/mod_rtmp.so*
@@ -2271,9 +2220,6 @@ fi
 
 %files format-native-file
 %{MODINSTDIR}/mod_native_file.so*
-
-%files format-portaudio-stream
-%{MODINSTDIR}/mod_portaudio_stream.so*
 
 %files format-shell-stream
 %{MODINSTDIR}/mod_shell_stream.so*
