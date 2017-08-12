@@ -47,7 +47,7 @@
 %{?with_mod_esl:%define build_mod_esl 1 }
 %{?with_mod_shout:%define build_mod_shout 1 }
 
-%define version 1.6.13
+%define version 1.6.19
 %define release 1
 
 ######################################################################################################################
@@ -186,7 +186,7 @@ BuildRequires: libsndfile-devel
 #BuildRequires: libvpx2-devel >= 2.0.0
 #BuildRequires: libyuv-devel >= 0.0.1280
 BuildRequires: lua-devel
-#BuildRequires: opus-devel
+BuildRequires: opus-devel
 %if %{build_py26_esl}
 BuildRequires: python26-devel
 Requires: python26
