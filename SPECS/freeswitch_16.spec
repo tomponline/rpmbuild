@@ -1238,7 +1238,7 @@ Requires:	freeswitch-application-valet_parking
 Requires:	freeswitch-application-voicemail
 Requires:	freeswitch-application-voicemail-ivr
 Requires:	freeswitch-codec-passthru-amr
-Requires:	freeswitch-codec-bv
+#Requires:	freeswitch-codec-bv
 Requires:	freeswitch-codec-passthru-g723_1
 Requires:	freeswitch-codec-passthru-g729
 Requires:	freeswitch-codec-h26x
