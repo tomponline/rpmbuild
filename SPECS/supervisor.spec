@@ -1,7 +1,7 @@
 %{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 Summary:  A System for Allowing the Control of Process State on UNIX
 Name: supervisor
-Version: 3.3.0
+Version: 3.3.3
 Release: 1%{?dist}
 
 License: ZPLv2.1 and BSD and MIT
@@ -65,7 +65,7 @@ fi
 
 %files
 %defattr(-,root,root,-)
-%doc LICENSES.txt TODO.txt CHANGES.txt COPYRIGHT.txt
+%doc LICENSES.txt CHANGES.txt COPYRIGHT.txt
 %dir %{_localstatedir}/log/%{name}
 %{_initrddir}/supervisord
 %{python_sitelib}/*
