@@ -4,7 +4,7 @@
 
 Summary: Apache HTTP Server
 Name: httpd
-Version: 2.4.23
+Version: 2.4.27
 Release: 1
 Epoch: 1
 URL: http://httpd.apache.org/
@@ -402,6 +402,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/httpd/modules/mod_mpm_worker.so
 %{_libdir}/httpd/modules/mod_negotiation.so
 %{_libdir}/httpd/modules/mod_proxy_ajp.so
+%{_libdir}/httpd/modules/mod_proxy_fdpass.so
 %{_libdir}/httpd/modules/mod_proxy_balancer.so
 %{_libdir}/httpd/modules/mod_proxy_connect.so
 %{_libdir}/httpd/modules/mod_proxy_express.so
