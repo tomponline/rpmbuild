@@ -20,6 +20,7 @@ BuildRequires: curl-devel >= 7.9, httpd >= 2.2, libstdc++-devel, openssl-devel, 
 BuildRequires: fileutils, file >= 4.0, perl, gcc-c++, readline-devel
 BuildRequires: curl-devel, libjpeg-devel, libpng-devel, libxml2-devel, freetype-devel, 
 BuildRequires: libmcrypt-devel, libxslt-devel, libc-client-devel, krb5-devel, libexif-devel
+BuildRequires: httpd-devel
 Requires: 	file >= 4.0, php-common = %{version}-%{release}, 
 Requires:	php-cli = %{version}-%{release}, php-pdo = %{version}-%{release},
 Obsoletes: 	php-mhash
