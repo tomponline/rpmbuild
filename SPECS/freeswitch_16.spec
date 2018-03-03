@@ -47,7 +47,7 @@
 %{?with_mod_esl:%define build_mod_esl 1 }
 %{?with_mod_shout:%define build_mod_shout 1 }
 
-%define version 1.6.19
+%define version 1.6.20
 %define release 1
 
 ######################################################################################################################
@@ -1464,6 +1464,9 @@ then
 else
    ./rebootstrap.sh
 fi
+
+#TP fix for CentOs 6
+autoreconf --force --install
 
 %configure -C \
 --prefix=%{PREFIX} \
