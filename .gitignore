@@ -5,3 +5,4 @@ BUILD/
 tmp/
 SOURCES/*.tar.*
 .ssh/*
+.lesshst
