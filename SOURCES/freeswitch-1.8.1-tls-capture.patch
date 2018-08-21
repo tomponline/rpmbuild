@@ -1,0 +1,13 @@
+diff -ru freeswitch-1.8.1-orig/libs/sofia-sip/libsofia-sip-ua/tport/tport_type_tls.c freeswitch-1.8.1/libs/sofia-sip/libsofia-sip-ua/tport/tport_type_tls.c
+--- freeswitch-1.8.1-orig/libs/sofia-sip/libsofia-sip-ua/tport/tport_type_tls.c	2018-08-17 15:04:27.000000000 +0000
++++ freeswitch-1.8.1/libs/sofia-sip/libsofia-sip-ua/tport/tport_type_tls.c	2018-08-21 15:30:39.153375464 +0000
+@@ -468,6 +468,9 @@
+   if (self->tp_master->mr_dump_file)
+     tport_dump_iovec(self, msg, n, iovec, veclen, "recv", "from");
+ 
++  if (self->tp_master->mr_capt_sock)
++    tport_capt_msg(self, msg, n, iovec, veclen, "recv");
++
+   /* Mark buffer as used */
+   msg_recv_commit(msg, N, 0);
+ 

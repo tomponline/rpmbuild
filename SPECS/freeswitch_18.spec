@@ -48,7 +48,7 @@
 %{?with_mod_shout:%define build_mod_shout 1 }
 
 %define version 1.8.1
-%define release 1
+%define release 2
 
 ######################################################################################################################
 #
@@ -125,6 +125,7 @@ Source6:	http://files.freeswitch.org/downloads/libs/libmemcached-0.32.tar.gz
 Source7:	http://files.freeswitch.org/downloads/libs/freeradius-client-1.1.6.tar.gz
 Prefix:        	%{prefix}
 
+Patch0:		freeswitch-1.8.1-tls-capture.patch
 
 ######################################################################################################################
 #
@@ -1251,6 +1252,8 @@ cp %{SOURCE4} libs/
 cp %{SOURCE5} libs/
 cp %{SOURCE6} libs/
 cp %{SOURCE7} libs/
+
+%patch0 -p1
 
 #Hotfix for redefined %_sysconfdir
 sed -ie 's:confdir="${sysconfdir}/freeswitch":confdir="$sysconfdir":' ./configure.ac
