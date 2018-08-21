@@ -187,7 +187,6 @@ BuildRequires: libsndfile-devel
 #BuildRequires: libyuv-devel >= 0.0.1280
 BuildRequires: lua-devel
 BuildRequires: opus-devel
-BuildRequires: ilbc2-devel
 BuildRequires: libtiff-devel
 %if %{build_py26_esl}
 BuildRequires: python26-devel
@@ -1318,7 +1317,7 @@ ASR_TTS_MODULES="asr_tts/mod_pocketsphinx asr_tts/mod_tts_commandline asr_tts/mo
 ######################################################################################################################
 CODECS_MODULES="codecs/mod_amr codecs/mod_amrwb codecs/mod_g723_1 \
 		codecs/mod_g729 codecs/mod_h26x codecs/mod_isac codecs/mod_mp4v codecs/mod_opus \
-		codecs/mod_theora codecs/mod_ilbc"
+		codecs/mod_theora"
 #
 %if %{build_sng_tc}
 CODECS_MODULES+="codecs/mod_sangoma_codec"
@@ -1713,7 +1712,6 @@ fi
 %{MODINSTDIR}/mod_syslog.so*
 %{MODINSTDIR}/mod_tone_stream.so*
 %{MODINSTDIR}/mod_xml_rpc.so* 
-%{MODINSTDIR}/mod_ilbc.so
 ######################################################################################################################
 #
 #						Package for the developer
