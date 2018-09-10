@@ -48,7 +48,7 @@
 %{?with_mod_shout:%define build_mod_shout 1 }
 
 %define version 1.8.1
-%define release 2
+%define release 3
 
 ######################################################################################################################
 #
@@ -1456,6 +1456,9 @@ then
 else
    ./rebootstrap.sh
 fi
+
+#TP fix for CentOS 6
+autoreconf --force --install
 
 %configure -C \
 --prefix=%{PREFIX} \

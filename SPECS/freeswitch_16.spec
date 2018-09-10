@@ -1465,7 +1465,7 @@ else
    ./rebootstrap.sh
 fi
 
-#TP fix for CentOs 6
+#TP fix for CentOS 6
 autoreconf --force --install
 
 %configure -C \
