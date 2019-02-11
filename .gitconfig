@@ -23,4 +23,4 @@
         hooksPath = ~/.git/hooks/
 
 [push]
-	default = simple
+	default = matching
