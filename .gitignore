@@ -1,5 +1,7 @@
 .bash*
 RPMS/*
 BUILDROOT/
+BUILD/
+SRPMS/
 SOURCES/*.tar.*
 .ssh/*
