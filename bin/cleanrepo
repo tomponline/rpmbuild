@@ -1,0 +1,3 @@
+repomanage -k 5 -o ~/SRPMS | xargs /bin/rm -fv
+repomanage -k 5 -o ~/RPMS/x86_64 | xargs /bin/rm -fv
+

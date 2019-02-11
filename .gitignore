@@ -1,8 +1,5 @@
 .bash*
 RPMS/*
 BUILDROOT/
-BUILD/
-tmp/
 SOURCES/*.tar.*
 .ssh/*
-.lesshst
