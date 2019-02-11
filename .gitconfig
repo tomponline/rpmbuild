@@ -22,3 +22,5 @@
         excludesfile = ~/.gitignore
         hooksPath = ~/.git/hooks/
 
+[push]
+	default = simple
