@@ -22,7 +22,7 @@ Group: System Environment/Daemons
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: autoconf, perl, pkgconfig, findutils
 BuildRequires: zlib-devel, libselinux-devel
-BuildRequires: apr-devel >= 1.6.5, apr-util-devel >= 1.6.1, pcre-devel >= 5.0
+BuildRequires: apr-devel >= 1.4.8, apr-util-devel >= 1.5.2, pcre-devel >= 5.0
 Requires: initscripts >= 8.36, /etc/mime.types
 Obsoletes: httpd-suexec
 Requires(pre): /usr/sbin/useradd
@@ -397,7 +397,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/httpd/modules/mod_logio.so
 %{_libdir}/httpd/modules/mod_mime_magic.so
 %{_libdir}/httpd/modules/mod_mime.so
+%if 0%{?rhel} != 7
 %{_libdir}/httpd/modules/mod_mpm_event.so
+%endif
 %{_libdir}/httpd/modules/mod_mpm_prefork.so
 %{_libdir}/httpd/modules/mod_mpm_worker.so
 %{_libdir}/httpd/modules/mod_negotiation.so
