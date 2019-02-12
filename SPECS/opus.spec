@@ -1,12 +1,11 @@
 Summary:	IETF Opus Interactive Audio Codec
 Name:		opus
-Version:	1.1
+Version:	1.3
 Release:	1%{?dist}
 License:	BSD
 Group:		Libraries
 Source0:	http://downloads.xiph.org/releases/opus/%{name}-%{version}.tar.gz
 # Source0-md5:	c5a8cf7c0b066759542bc4ca46817ac6
-Patch0:		%{name}-sh.patch
 URL:		http://opus-codec.org/
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake >= 1.6
@@ -38,10 +37,8 @@ Static OPUS libraries.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
-./autogen.sh
 %{__libtoolize}
 %{__aclocal}
 %{__autoconf}
