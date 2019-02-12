@@ -172,6 +172,7 @@ BuildRequires: libdb-devel
 %endif
 %if 0%{?rhel} < 7
 BuildRequires: db4-devel
+BuildRequires: devtoolset-7-gcc
 %endif
 BuildRequires: python-devel
 BuildRequires: libogg-devel
