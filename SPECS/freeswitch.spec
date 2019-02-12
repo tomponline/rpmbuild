@@ -166,7 +166,11 @@ BuildRequires: unixODBC-devel
 BuildRequires: gdbm-devel
 %if 0%{?suse_version} > 100
 BuildRequires: db-devel
-%else
+%endif
+%if 0%{?rhel} >= 7
+BuildRequires: libdb-devel
+%endif
+%if 0%{?rhel} < 7
 BuildRequires: db4-devel
 %endif
 BuildRequires: python-devel
@@ -1448,7 +1452,9 @@ export ACLOCAL_FLAGS="-I /usr/share/aclocal"
 #
 ######################################################################################################################
 
+%if 0%{?rhel} < 7
 source /opt/rh/devtoolset-7/enable
+%endif
 
 if test -f bootstrap.sh
 then 
@@ -1457,8 +1463,10 @@ else
    ./rebootstrap.sh
 fi
 
-#TP fix for CentOS 6
+%if 0%{?rhel} >= 6
+#TP fix for CentOS 6 and 7
 autoreconf --force --install
+%endif
 
 %configure -C \
 --prefix=%{PREFIX} \
@@ -1504,7 +1512,9 @@ cd libs/esl
 ######################################################################################################################
 %install
 
+%if 0%{?rhel} < 7
 source /opt/rh/devtoolset-7/enable
+%endif
 
 %{__make} DESTDIR=%{buildroot} install
 
