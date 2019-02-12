@@ -1,9 +1,9 @@
 %define contentdir /var/www
-%define apiver no-debug-non-zts-20160303
+%define apiver no-debug-non-zts-20180731
 
 Summary: The PHP HTML-embedded scripting language. (PHP: Hypertext Preprocessor)
 Name: php
-Version: 7.1.8
+Version: 7.3.2
 Release: 1
 License: The PHP License v3.01
 Group: Development/Languages
@@ -19,7 +19,7 @@ BuildRequires: gcc, binutils, libtool
 BuildRequires: curl-devel >= 7.9, httpd >= 2.2, libstdc++-devel, openssl-devel, zlib-devel
 BuildRequires: fileutils, file >= 4.0, perl, gcc-c++, readline-devel
 BuildRequires: curl-devel, libjpeg-devel, libpng-devel, libxml2-devel, freetype-devel, 
-BuildRequires: libmcrypt-devel, libxslt-devel, libc-client-devel, krb5-devel, libexif-devel
+BuildRequires: libxslt-devel, krb5-devel, libexif-devel
 BuildRequires: httpd-devel
 Requires: 	file >= 4.0, php-common = %{version}-%{release}, 
 Requires:	php-cli = %{version}-%{release}, php-pdo = %{version}-%{release},
@@ -59,14 +59,6 @@ Requires: php = %{version}-%{release}
 
 %description gd
 Provides PHP GD module
-
-%package mcrypt
-Group: Development/Languages
-Summary: MCrypt module of PHP
-Requires: php = %{version}-%{release}
-
-%description mcrypt
-Provides PHP MCrypt module
 
 %package mbstring
 Group: Development/Languages
@@ -140,14 +132,6 @@ Requires: php = %{version}-%{release}
 
 %description ftp
 Provides FTP module in PHP
-
-#%package imap
-#Group: Development/Languages
-#Summary: IMAP module in PHP
-#Requires: php = %{version}-%{release}, libc-client
-
-#%description imap
-#Provides IMAP module in PHP
 
 %package exif
 Group: Development/Languages
@@ -230,7 +214,6 @@ fi
         --with-mysqli=shared,mysqlnd \
         --with-pdo-mysql=shared,mysqlnd \
         --with-curl \
-        --with-mcrypt=shared \
 	--enable-soap=shared \
 	--enable-dom=shared \
 	--enable-pdo \
@@ -242,6 +225,7 @@ fi
 	--enable-inline-optimization \
 	--disable-debug \
 	--enable-zip=shared \
+	--without-libzip \
 	--enable-sockets=shared \
 	--enable-pcntl=shared \
 	--with-gettext=shared \
@@ -249,9 +233,6 @@ fi
 	--with-readline \
 	--enable-exif=shared \
 	--with-kerberos=%{_prefix}
-
-#      --with-imap=shared,%{_prefix} \
-#        --with-imap-ssl=%{_prefix} \
 
 make %{?_smp_mflags}
 
@@ -288,7 +269,6 @@ install -m 700 -d $RPM_BUILD_ROOT%{_localstatedir}/lib/php/session
 #Create /etc/php.d directory and install module ini files
 install -m 755 -d $RPM_BUILD_ROOT%{_sysconfdir}/php.d
 echo "extension=gd.so" >  $RPM_BUILD_ROOT%{_sysconfdir}/php.d/gd.ini
-echo "extension=mcrypt.so" >  $RPM_BUILD_ROOT%{_sysconfdir}/php.d/mcrypt.ini
 echo "extension=mysqli.so" >  $RPM_BUILD_ROOT%{_sysconfdir}/php.d/mysqli.ini
 echo "extension=pdo_mysql.so" >  $RPM_BUILD_ROOT%{_sysconfdir}/php.d/pdo_mysql.ini
 echo "extension=xsl.so" >  $RPM_BUILD_ROOT%{_sysconfdir}/php.d/xsl.ini
@@ -348,11 +328,6 @@ fi
 %defattr(-,root,root)
 %config(noreplace) /etc/php.d/gd.ini
 %{_libdir}/php/extensions/%{apiver}/gd.so
-
-%files mcrypt
-%defattr(-,root,root)
-%config(noreplace) /etc/php.d/mcrypt.ini
-%{_libdir}/php/extensions/%{apiver}/mcrypt.so
 
 %files mbstring
 %defattr(-,root,root)
