@@ -122,7 +122,7 @@ Source3:	http://files.freeswitch.org/downloads/libs/pocketsphinx-0.8.tar.gz
 Source4:	http://files.freeswitch.org/downloads/libs/sphinxbase-0.8.tar.gz
 Source5:	http://files.freeswitch.org/downloads/libs/communicator_semi_6000_20080321.tar.gz
 Source6:	http://files.freeswitch.org/downloads/libs/libmemcached-0.32.tar.gz
-Source7:	http://files.freeswitch.org/downloads/libs/freeradius-client-1.1.6.tar.gz
+Source7:	http://files.freeswitch.org/downloads/libs/freeradius-client-1.1.7.tar.gz
 Prefix:        	%{prefix}
 
 Patch0:		freeswitch-1.8.1-tls-capture.patch
