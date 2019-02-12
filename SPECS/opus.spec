@@ -39,11 +39,6 @@ Static OPUS libraries.
 %setup -q
 
 %build
-%{__libtoolize}
-%{__aclocal}
-%{__autoconf}
-%{__autoheader}
-%{__automake}
 %configure \
 	--enable-custom-modes \
 	--disable-silent-rules
