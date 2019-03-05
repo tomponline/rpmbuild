@@ -48,7 +48,10 @@
 %{?with_mod_shout:%define build_mod_shout 1 }
 
 %define version 1.8.5
-%define release 1
+%define release 2
+
+#TP Use devtoolset-7's strip command.
+%global __strip /opt/rh/devtoolset-7/root/usr/bin/strip
 
 ######################################################################################################################
 #
