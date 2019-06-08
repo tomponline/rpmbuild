@@ -1,7 +1,7 @@
 %global __spec_install_pre %{___build_pre}
 
 # Define the version of the Linux Kernel Archive tarball.
-%define LKAver 4.19.44
+%define LKAver 4.19.48
 
 # Define the buildid, if required.
 #define buildid .
