@@ -1,6 +1,6 @@
 Summary: Linux Containers
 Name: lxc
-Version: 3.1.0
+Version: 3.2.1
 Release: 1%{?dist}
 URL: https://linuxcontainers.org/lxc/downloads/
 Source0: %{name}-%{version}.tar.gz
@@ -22,6 +22,8 @@ BuildRequires: graphviz libxslt pkgconfig
 BuildRequires: systemd-units
 Requires: wget rsync openssl bash-completion
 Requires: %{name}-libs = %{version}-%{release}
+
+Patch0: lxc-tree-wide-initialize-all-auto-cleanup-variables.patch
 
 %description
 Containers are insulated areas inside a system, which have their own namespace
@@ -49,6 +51,8 @@ development of the Linux containers.
 
 %prep
 %setup -q
+
+%patch0 -p1
 
 %build
 ./autogen.sh
